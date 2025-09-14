@@ -110,7 +110,10 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
             link.classList.remove('active');
             
             // Add active class to current page link
-            if (linkPath === currentPath || (currentPath === '/' && linkPage === 'home')) {
+            // Handle both local development and GitHub Pages deployment
+            if (linkPath === currentPath || 
+                (currentPath === '/easton-project/' && linkPage === 'home') ||
+                (currentPath === '/' && linkPage === 'home')) {
                 link.classList.add('active');
             }
         });
