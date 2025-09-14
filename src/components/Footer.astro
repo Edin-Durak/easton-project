@@ -61,7 +61,11 @@ const currentYear = new Date().getFullYear();
             // Handle both local development and GitHub Pages deployment
             if (linkPath === currentPath || 
                 (currentPath === '/easton-project/' && linkPage === 'home') ||
-                (currentPath === '/' && linkPage === 'home')) {
+                (currentPath === '/' && linkPage === 'home') ||
+                (currentPath === '/easton-project/about' && linkPage === 'about') ||
+                (currentPath === '/about' && linkPage === 'about') ||
+                (currentPath === '/easton-project/contact' && linkPage === 'contact') ||
+                (currentPath === '/contact' && linkPage === 'contact')) {
                 link.classList.add('active');
             }
         });
