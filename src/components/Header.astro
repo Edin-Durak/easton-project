@@ -45,39 +45,56 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
 </header>
 
 <script>
-    // Mobile menu toggle functionality
-    const menuToggle = document.querySelector('.header__menu-toggle');
-    const mobileNav = document.querySelector('.header__mobile-nav');
-    const body = document.body;
+    // Initialize header functionality
+    function initHeader() {
+        const menuToggle = document.querySelector('.header__menu-toggle');
+        const mobileNav = document.querySelector('.header__mobile-nav');
+        const body = document.body;
 
-    if (menuToggle && mobileNav) {
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        if (menuToggle && mobileNav) {
+            // Remove existing event listeners to prevent duplicates
+            const newMenuToggle = menuToggle.cloneNode(true);
+            menuToggle.parentNode?.replaceChild(newMenuToggle, menuToggle);
             
-            menuToggle.setAttribute('aria-expanded', String(!isExpanded));
-            mobileNav.classList.toggle('header__mobile-nav--open');
-            body.classList.toggle('no-scroll');
-        });
+            // Re-query after replacement
+            const freshMenuToggle = document.querySelector('.header__menu-toggle');
+            const freshMobileNav = document.querySelector('.header__mobile-nav');
 
-        // Close menu when clicking on links
-        const mobileLinks = mobileNav.querySelectorAll('.header__mobile-nav-link, .header__mobile-nav-button');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.setAttribute('aria-expanded', 'false');
-                mobileNav.classList.remove('header__mobile-nav--open');
-                body.classList.remove('no-scroll');
-            });
-        });
+            if (freshMenuToggle && freshMobileNav) {
+                // Mobile menu toggle functionality
+                freshMenuToggle.addEventListener('click', () => {
+                    const isExpanded = freshMenuToggle.getAttribute('aria-expanded') === 'true';
+                    
+                    freshMenuToggle.setAttribute('aria-expanded', String(!isExpanded));
+                    freshMobileNav.classList.toggle('header__mobile-nav--open');
+                    body.classList.toggle('no-scroll');
+                });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const target = e.target as Element;
-            if (target && !target.closest('.header')) {
-                menuToggle.setAttribute('aria-expanded', 'false');
-                mobileNav.classList.remove('header__mobile-nav--open');
-                body.classList.remove('no-scroll');
+                // Close menu when clicking on links
+                const mobileLinks = freshMobileNav.querySelectorAll('.header__mobile-nav-link, .header__mobile-nav-button');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        freshMenuToggle.setAttribute('aria-expanded', 'false');
+                        freshMobileNav.classList.remove('header__mobile-nav--open');
+                        body.classList.remove('no-scroll');
+                    });
+                });
+
+                // Close menu when clicking outside
+                const outsideClickHandler = (e: Event) => {
+                    const target = e.target as Element;
+                    if (target && !target.closest('.header')) {
+                        freshMenuToggle.setAttribute('aria-expanded', 'false');
+                        freshMobileNav.classList.remove('header__mobile-nav--open');
+                        body.classList.remove('no-scroll');
+                    }
+                };
+
+                // Remove existing listener and add new one
+                document.removeEventListener('click', outsideClickHandler);
+                document.addEventListener('click', outsideClickHandler);
             }
-        });
+        }
     }
 
     // Active navigation link functionality
@@ -99,9 +116,30 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
         });
     }
 
-    // Set active link on page load and after navigation
+    // Close mobile menu on screen size change
+    function handleResize() {
+        const menuToggle = document.querySelector('.header__menu-toggle');
+        const mobileNav = document.querySelector('.header__mobile-nav');
+        const body = document.body;
+
+        if (menuToggle && mobileNav && window.innerWidth > 768) {
+            // Close mobile menu when screen becomes desktop size
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileNav.classList.remove('header__mobile-nav--open');
+            body.classList.remove('no-scroll');
+        }
+    }
+
+    // Initialize on page load
+    initHeader();
     setActiveNavLink();
-    
-    // Listen for view transitions navigation events
-    document.addEventListener('astro:page-load', setActiveNavLink);
+
+    // Handle View Transitions navigation
+    document.addEventListener('astro:page-load', () => {
+        initHeader();
+        setActiveNavLink();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', handleResize);
 </script>
