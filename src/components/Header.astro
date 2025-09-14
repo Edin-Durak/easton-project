@@ -17,9 +17,9 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
         <!-- Desktop Navigation -->
         <div class="header__nav">
             <nav class="header__nav-list">
-                <a href="/" class="header__nav-link">Home</a>
-                <a href="/about" class="header__nav-link">About</a>
-                <a href="/contact" class="header__nav-link">Contact</a>
+                <a href="/" class="header__nav-link" data-page="home">Home</a>
+                <a href="/about" class="header__nav-link" data-page="about">About</a>
+                <a href="/contact" class="header__nav-link" data-page="contact">Contact</a>
             </nav>
             <div class="header__nav-buttons">
                 <a href="/donate" role="button" class="header__nav-button">Donate</a>
@@ -36,9 +36,9 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
     <!-- Mobile Navigation Overlay -->
     <div class="header__mobile-nav">
         <nav class="header__mobile-nav-list">
-            <a href="/" class="header__mobile-nav-link">Home</a>
-            <a href="/about" class="header__mobile-nav-link">About</a>
-            <a href="/contact" class="header__mobile-nav-link">Contact</a>
+            <a href="/" class="header__mobile-nav-link" data-page="home">Home</a>
+            <a href="/about" class="header__mobile-nav-link" data-page="about">About</a>
+            <a href="/contact" class="header__mobile-nav-link" data-page="contact">Contact</a>
             <a href="/donate" class="header__mobile-nav-button">Donate</a>
         </nav>
     </div>
@@ -79,4 +79,26 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
             }
         });
     }
+
+    // Active navigation link functionality
+    function setActiveNavLink() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('[data-page]');
+        
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            const linkPage = link.getAttribute('data-page');
+            
+            // Remove active class from all links
+            link.classList.remove('active');
+            
+            // Add active class to current page link
+            if (linkPath === currentPath || (currentPath === '/' && linkPage === 'home')) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Set active link on page load
+    setActiveNavLink();
 </script>

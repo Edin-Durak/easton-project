@@ -70,7 +70,8 @@
   border-bottom: 2px solid transparent;
 }
 
-.footer__nav-link:hover {
+.footer__nav-link:hover,
+.footer__nav-link.active {
   border-bottom: 2px solid var(--color-warm-beige);
 }
 
