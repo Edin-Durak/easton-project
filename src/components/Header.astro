@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/logo.svg';
+
+
+---
+<header class="header">
+    <div class="header__inner container">
+        <div class="header__logo">
+            <a href="/">
+                <Image src={logo} alt="Easton Project Logo" width={100} height={100} loading="eager" />
+            </a>
+        </div>
+        <div class="header__nav">
+            <nav class="header__nav-list">
+                <a href="/" class="header__nav-link">Home</a>
+                <a href="/about" class="header__nav-link">About</a>
+                <a href="/contact" class="header__nav-link">Contact</a>
+            </nav>
+            <div class="header__nav-buttons">
+                <a href="/donate" role="button" class="header__nav-button">Donate</a>
+            </div>
+        </div>
+    </div>
+</header>

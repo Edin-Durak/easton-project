@@ -1,0 +1,10 @@
+/* Typography  styles */
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight-base);
+  letter-spacing: var(--letter-spacing-base);
+  color: var(--color-warm-beige);
+}

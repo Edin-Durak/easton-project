@@ -1,0 +1,68 @@
+:root {
+  /* Colors */
+  --color-dark-navy: #1b2a30;
+  --color-warm-beige: #ddbd92;
+  --color-deep-charcoal: #2f3c41;
+  --color-light-blue: #a5b4ba;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --font-family-base: "Inria Serif", "Georgia", serif;
+  --font-family-secondary: "Figtree", "Arial", sans-serif;
+  --font-size-base: 20px;
+  --line-height-base: 100%;
+  --font-weight-base: 400;
+  --letter-spacing-base: 0%;
+
+  /* Spacing */
+  --spacing-0: 0px;
+  --spacing-1: 2px;
+  --spacing-2: 4px;
+  --spacing-3: 8px;
+  --spacing-4: 12px;
+  --spacing-5: 16px;
+  --spacing-6: 20px;
+  --spacing-7: 24px;
+  --spacing-8: 32px;
+  --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-11: 48px;
+  --spacing-12: 56px;
+  --spacing-13: 64px;
+  --spacing-14: 80px;
+  --spacing-15: 100px;
+  --spacing-16: 120px;
+  --spacing-17: 160px;
+  --spacing-18: 200px;
+
+  /* Breakpoints */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1350px;
+  --breakpoint-3xl: 1440px;
+
+  /* Border thickness */
+  --border-0: 0;
+  --border: 1px;
+  --border-md: 2px;
+  --border-lg: 3px;
+  --border-xl: 4px;
+
+  /* Border radius */
+  --rounded-none: 0px;
+  --rounded-2xs: 6px;
+  --rounded-xs: 12px;
+  --rounded-sm: 16px;
+  --rounded: 20px;
+  --rounded-md: 24px;
+  --rounded-lg: 32px;
+  --rounded-xl: 40px;
+  --rounded-full: 999px;
+
+  /* Shadows */
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
