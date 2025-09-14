@@ -3,6 +3,7 @@ import "../assets/styles/main.css";
 import Header from "../components/Header.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Footer from "../components/Footer.astro";
+import { ViewTransitions } from "astro:transitions";
 
 export interface Props {
 	title?: string;
@@ -37,6 +38,9 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={ogImage} />
+		
+		<!-- View Transitions -->
+		<ViewTransitions />
 	</head>
 	<body>
 		<Header />
