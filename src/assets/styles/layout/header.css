@@ -1,5 +1,6 @@
 .header {
   background-color: transparent;
+  border-bottom: 2px solid var(--color-warm-beige);
 }
 
 .header__inner {
