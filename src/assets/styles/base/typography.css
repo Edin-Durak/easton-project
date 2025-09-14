@@ -8,3 +8,48 @@ body {
   letter-spacing: var(--letter-spacing-base);
   color: var(--color-warm-beige);
 }
+
+h1,
+h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-4);
+}
+
+p {
+  margin-bottom: var(--spacing-4);
+}
+
+@media (max-width: 992px) {
+  h1,
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-3);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: var(--font-size-base-md);
+  }
+
+  h1,
+  h2 {
+    font-size: 2.25rem;
+    margin-bottom: var(--spacing-2);
+  }
+
+  p {
+    margin-bottom: var(--spacing-3);
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: var(--font-size-base-sm);
+  }
+
+  p {
+    margin-bottom: var(--spacing-2);
+  }
+}

@@ -11,7 +11,9 @@
   --font-family-base: "Inria Serif", "Georgia", serif;
   --font-family-secondary: "Figtree", "Arial", sans-serif;
   --font-size-base: 20px;
-  --line-height-base: 100%;
+  --font-size-base-md: 18px;
+  --font-size-base-sm: 16px;
+  --line-height-base: 1.5;
   --font-weight-base: 400;
   --letter-spacing-base: 0%;
 
