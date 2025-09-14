@@ -1,5 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import {Image} from 'astro:assets';
+import alexPhoto from '../assets/images/alex-photo.webp';
+import davidPhoto from '../assets/images/david-photo.webp';
+import meghanPhoto from '../assets/images/meghan-photo.webp';
+import mikePhoto from '../assets/images/mike-photo.webp';
+import giordanoPhoto from '../assets/images/giordano-photo.webp';
+import descendantsPhoto from '../assets/images/descendants-photo.webp';
+import georgeEastonPhoto from '../assets/images/george-easton-photo.webp';
 ---
 
 <Layout 
@@ -15,6 +23,62 @@ import Layout from '../layouts/Layout.astro';
             <p class="our-board__description">The Easton Project is addressing urgent and persistent barriers in Quebec’s addiction and mental health system—especially those affecting English-speaking residents.</p>
             <p class="our-board__description">From long wait times to financial constraints and a lack of transitional housing, the path to recovery is often obstructed.</p>
             <p class="our-board__description">Our three-pronged model provides swift, compassionate, and practical support that helps individuals take action when they’re ready to seek help—and stay the course toward long-term healing.</p>
+
+            <div class="our-board__members">
+                <article class="our-board__member">
+                    <div class="our-board__member-photo">
+                        <Image src={mikePhoto} alt="Mike - President" fetchpriority={'high'}   />
+                    </div>
+                    <div class="our-board__member-info">
+                        <h3 class="our-board__member-name">Mike Weston</h3>
+                        <p class="our-board__member-title">President</p>
+                        <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
+                    </div>
+                </article>
+                <article class="our-board__member">
+                    <div class="our-board__member-photo">
+                        <Image src={davidPhoto} alt="David - Co-Founder"  fetchpriority={'high'}  />
+                    </div>
+                    <div class="our-board__member-info">
+                        <h3 class="our-board__member-name">Dr. David Luckow</h3>
+                        <p class="our-board__member-title">Co-Founder</p>
+                        <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
+                    </div>
+                </article>
+                <article class="our-board__member">
+                    <div class="our-board__member-photo">
+                        <Image src={meghanPhoto} alt="Meghan - Treasurer" fetchpriority={'high'}   />
+                    </div>
+                    <div class="our-board__member-info">
+                        <h3 class="our-board__member-name">Meghan McJannet</h3>
+                        <p class="our-board__member-title">Treasurer</p>
+                        <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
+                    </div>
+                </article>
+            </div>
+            <div class="our-board__members">
+                <article class="our-board__member">
+                    <div class="our-board__member-photo">
+                        <Image src={giordanoPhoto} alt="Giordano - Board Member"    />
+                    </div>
+                    <div class="our-board__member-info">
+                        <h3 class="our-board__member-name">Giordano Baratta</h3>
+                        <p class="our-board__member-title">Board Member</p>
+                        <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
+                    </div>
+                </article>
+                <article class="our-board__member">
+                    <div class="our-board__member-photo">
+                        <Image src={alexPhoto} alt="Alex - Board Member"    />
+                    </div>
+                    <div class="our-board__member-info">
+                        <h3 class="our-board__member-name">Alex Boisselle</h3>
+                        <p class="our-board__member-title">Board Member</p>
+                        <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
+                    </div>
+                </article>
+
+            </div>
         </div>
     </section>
 </main>
