@@ -27,31 +27,31 @@ import georgeEastonPhoto from '../assets/images/george-easton-photo.webp';
             <div class="our-board__members">
                 <article class="our-board__member">
                     <div class="our-board__member-photo">
-                        <Image src={mikePhoto} alt="Mike - President" fetchpriority={'high'}   />
+                        <Image src={mikePhoto} alt="Mike - President" fetchpriority={'high'} loading={'lazy'}  />
                     </div>
                     <div class="our-board__member-info">
                         <h3 class="our-board__member-name">Mike Weston</h3>
-                        <p class="our-board__member-title">President</p>
+                        <p class="our-board__member-title italic">President</p>
                         <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
                     </div>
                 </article>
                 <article class="our-board__member">
                     <div class="our-board__member-photo">
-                        <Image src={davidPhoto} alt="David - Co-Founder"  fetchpriority={'high'}  />
+                        <Image src={davidPhoto} alt="David - Co-Founder"  fetchpriority={'high'} loading={'lazy'}  />
                     </div>
                     <div class="our-board__member-info">
                         <h3 class="our-board__member-name">Dr. David Luckow</h3>
-                        <p class="our-board__member-title">Co-Founder</p>
+                        <p class="our-board__member-title italic">Co-Founder</p>
                         <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
                     </div>
                 </article>
                 <article class="our-board__member">
                     <div class="our-board__member-photo">
-                        <Image src={meghanPhoto} alt="Meghan - Treasurer" fetchpriority={'high'}   />
+                        <Image src={meghanPhoto} alt="Meghan - Treasurer" fetchpriority={'high'} loading={'lazy'}   />
                     </div>
                     <div class="our-board__member-info">
                         <h3 class="our-board__member-name">Meghan McJannet</h3>
-                        <p class="our-board__member-title">Treasurer</p>
+                        <p class="our-board__member-title italic">Treasurer</p>
                         <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
                     </div>
                 </article>
@@ -59,25 +59,45 @@ import georgeEastonPhoto from '../assets/images/george-easton-photo.webp';
             <div class="our-board__members">
                 <article class="our-board__member">
                     <div class="our-board__member-photo">
-                        <Image src={giordanoPhoto} alt="Giordano - Board Member"    />
+                        <Image src={giordanoPhoto} alt="Giordano - Board Member"  loading={'lazy'}    />
                     </div>
                     <div class="our-board__member-info">
                         <h3 class="our-board__member-name">Giordano Baratta</h3>
-                        <p class="our-board__member-title">Board Member</p>
+                        <p class="our-board__member-title italic">Board Member</p>
                         <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
                     </div>
                 </article>
                 <article class="our-board__member">
                     <div class="our-board__member-photo">
-                        <Image src={alexPhoto} alt="Alex - Board Member"    />
+                        <Image src={alexPhoto} alt="Alex - Board Member"  loading={'lazy'}    />
                     </div>
                     <div class="our-board__member-info">
                         <h3 class="our-board__member-name">Alex Boisselle</h3>
-                        <p class="our-board__member-title">Board Member</p>
+                        <p class="our-board__member-title italic">Board Member</p>
                         <p class="our-board__member-description">With over a decade of experience in the addiction treatment field, Mike is dedicated to removing financial barriers to care and ensuring individuals have access to the resources they need for recovery.</p>
                     </div>
                 </article>
 
+            </div>
+        </div>
+    </section>
+    <section class="our-legacy" aria-labelledby="our-legacy-heading">
+        <div class="our-legacy__inner container">
+            <div class="our-legacy__content">
+                <div class="our-legacy__content-inner">
+                    <h2 class="our-legacy__heading" id="our-legacy-heading">An Enduring Legacy</h2>
+                    <p class="our-legacy__description"><span class="bold">George Easton (1808–1884)</span> was an author and well-known member of the Scottish Temperance League during the nineteenth century. Born in the rural parish of Ewes in Dumfriesshire, he spent his younger years among the working class milieu of industrial Britain where overindulgence in alcohol was rife and led many of his colleagues to destitution. </p>
+                    <p class="our-legacy__description">Between 1854 and 1882, in the days before psychology or treatment centres, he spoke at halls and churches all over Britain, Canada and the United States on the dangers of alcohol abuse. Halted only by failing health, his obituary estimated that he had travelled some 200,000 miles over his career with the League and delivered no fewer than 7,800 addresses.</p>
+                </div>
+                <div class="our-legacy__content-image">
+                    <Image src={georgeEastonPhoto} alt="George Easton" loading={'lazy'} />
+                </div>
+            </div>
+            <p class="our-legacy__description">Writing in his 1871 book <span class="italic"> Travels in America</span> on “the great contrast between Montreal’s appearance when wearing its winter garb, and when arrayed in its summer dress,” Easton concluded that “it seemed the finest city I visited in all my travels.”</p>
+            <p class="our-legacy__description bold">The Easton Project has been established by George Easton’s descendants in Montreal as a tribute to his legacy of helping people suffering from substance abuse.</p>
+            <div class="our-legacy-image">
+                <Image src={descendantsPhoto} alt="George Easton's Descendants" loading={'lazy'} />
+                <p class="our-legacy-image__description italic">George Easton descendants (L to R) Megan Williams, Isobel Williams, David Williams and William Weston.</p>
             </div>
         </div>
     </section>

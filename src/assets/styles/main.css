@@ -1,19 +1,15 @@
-/* variables */
+/* ========================================
+   EASTON PROJECT - MAIN STYLES
+   ======================================== */
+
+/* Variables */
 @import "./abstracts/variables.css";
 
-/* Base */
-@import "./base/index.css";
-
-/* Layout */
-@import "./layout/index.css";
+/* Base Styles */
+@import "./base.css";
 
 /* Components */
-@import "./components/index.css";
+@import "./components.css";
 
 /* Pages */
-@import "./pages/index.css";
-
-/* Themes 
-@import "./themes/index";
-
-*/
+@import "./pages.css";
