@@ -64,6 +64,9 @@ const currentYear = new Date().getFullYear();
         });
     }
 
-    // Set active link on page load
+    // Set active link on page load and after navigation
     setActiveNavLink();
+    
+    // Listen for view transitions navigation events
+    document.addEventListener('astro:page-load', setActiveNavLink);
 </script>
