@@ -9,25 +9,49 @@ import arrowUpIcon from '../assets/images/icons/arrow-up-icon.svg';
 </button>
 
 <script>
-    // Scroll to top functionality
-    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-    
-    if (scrollToTopBtn) {
-        // Show/hide button based on scroll position
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.add('scroll-to-top--visible');
-            } else {
-                scrollToTopBtn.classList.remove('scroll-to-top--visible');
-            }
-        });
+    // Initialize scroll to top functionality
+    function initScrollToTop() {
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        
+        if (scrollToTopBtn) {
+            // Remove existing event listeners to prevent duplicates
+            const newScrollBtn = scrollToTopBtn.cloneNode(true);
+            scrollToTopBtn.parentNode?.replaceChild(newScrollBtn, scrollToTopBtn);
+            
+            // Re-query after replacement
+            const freshScrollBtn = document.getElementById('scrollToTopBtn');
+            
+            if (freshScrollBtn) {
+                // Show/hide button based on scroll position
+                const handleScroll = () => {
+                    if (window.pageYOffset > 300) {
+                        freshScrollBtn.classList.add('scroll-to-top--visible');
+                    } else {
+                        freshScrollBtn.classList.remove('scroll-to-top--visible');
+                    }
+                };
 
-        // Smooth scroll to top when clicked
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+                // Remove existing scroll listener and add new one
+                window.removeEventListener('scroll', handleScroll);
+                window.addEventListener('scroll', handleScroll);
+
+                // Smooth scroll to top when clicked
+                freshScrollBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+
+                // Initial check for scroll position
+                handleScroll();
+            }
+        }
     }
+
+    // Initialize on page load
+    initScrollToTop();
+
+    // Re-initialize after View Transitions navigation
+    document.addEventListener('astro:page-load', initScrollToTop);
 </script>
