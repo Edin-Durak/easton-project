@@ -23,20 +23,20 @@
 .header__nav-list {
   display: flex;
   gap: var(--spacing-10);
+}
 
-  a {
-    border-bottom: 2px solid transparent;
-    transition: border-bottom 0.3s ease;
-    padding: var(--spacing-3) 0;
+.header__nav-list a {
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s ease;
+  padding: var(--spacing-3) 0;
+}
 
-    &:hover {
-      border-bottom: 2px solid var(--color-warm-beige);
-    }
-  }
+.header__nav-list a:hover {
+  border-bottom: 2px solid var(--color-warm-beige);
+}
 
-  a.active {
-    border-bottom: 2px solid var(--color-warm-beige);
-  }
+.header__nav-list a.active {
+  border-bottom: 2px solid var(--color-warm-beige);
 }
 
 .header__nav-button {
@@ -45,9 +45,11 @@
   border-radius: var(--rounded-full);
   border: 2px solid var(--color-warm-beige);
   transition: all 0.3s ease;
-
-  &:hover {
-    background-color: var(--color-warm-beige);
-    color: var(--color-dark-navy);
-  }
 }
+
+.header__nav-button:hover {
+  background-color: var(--color-warm-beige);
+  color: var(--color-dark-navy);
+}
+
+/* Media Queries */
