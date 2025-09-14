@@ -54,7 +54,7 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            menuToggle.setAttribute('aria-expanded', String(!isExpanded));
             mobileNav.classList.toggle('header__mobile-nav--open');
             body.classList.toggle('no-scroll');
         });
@@ -71,7 +71,8 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.header')) {
+            const target = e.target as Element;
+            if (target && !target.closest('.header')) {
                 menuToggle.setAttribute('aria-expanded', 'false');
                 mobileNav.classList.remove('header__mobile-nav--open');
                 body.classList.remove('no-scroll');
