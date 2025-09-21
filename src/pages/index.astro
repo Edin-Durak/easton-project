@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import groupPhoto from '../assets/images/group-photo.webp';
 import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
+import mikeCoFounderPhoto from '../assets/images/mike-co-founder-photo.webp';
 
 
 
@@ -32,7 +33,42 @@ import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
                     <p class="hero-section__cta-description bold">Our goal is to foster healthier individuals and stronger communities.</p>
                     </div>
                     <div class="hero-section__cta-image">
-                        <Image src={eastonProjectPhoto} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
+                        <Image src={eastonProjectPhoto} alt="Easton Project"  loading="lazy" format='avif'  />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our-mission" aria-labelledby="our-mission-heading">
+            <div class="our-mission__inner container">
+
+                <div class="our-mission__ceo">
+                    <div class="our-mission__ceo-photo">
+                        <Image src={mikeCoFounderPhoto} alt="Mike - Co-Founder"  loading="lazy" format='avif'  />
+                    </div>
+                    <div class="our-mission__ceo-info">                        
+                        <p class="our-mission__ceo-description">“After spending a decade as the director of Andy's House Treatment Centre, it became painfully clear that despite our best efforts, there are simply not enough resources or funding available for individuals struggling with addiction and mental health challenges in Quebec.</p>
+                        <p class="our-mission__ceo-description">The Easton Project was born out of a deep commitment to help bridge these critical gaps and provide the kind of support that can transform lives.”</p>
+                        <p class="our-mission__ceo-name">Mike Weston,</p>
+                        <p class="our-mission__ceo-title italic">Co-Founder of The Easton Project</p>
+                    </div>
+                </div>
+                <h2 class="our-mission__heading" id="our-mission-heading">Our Mission & Activities</h2>
+                <p class="our-mission__description">The Easton Project is addressing urgent and persistent barriers in Quebec’s addiction and mental health system—especially those affecting English-speaking residents.</p>
+                <p class="our-mission__description">From long wait times to financial constraints and a lack of transitional housing, the path to recovery is often obstructed. </p>
+                <p class="our-mission__description">Our three-pronged model provides swift, compassionate, and practical support that helps individuals take action when they’re ready to seek help—and stay the course toward long-term healing. </p>
+
+                <div class="our-mission__activities">
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Screenings & Referrals</h3>
+                        <p class="our-mission__activities-item-description">Through phone, in-person, and video call assessments, we match individuals in need with the most suitable addiction and mental health treatment resources.</p>
+                    </div>
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Subsidization</h3>
+                        <p class="our-mission__activities-item-description">We provide funding for treatment through donations on a sliding scale fee structure. Priority is given to those with limited access to public services, but all who are seeking help  are supported.</p>
+                    </div>
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Sober Living</h3>
+                        <p class="our-mission__activities-item-description">Through the operation of a sober living house, we provide people who have completed a treatment program with  safe, sober accommodations as they transition into independent living.</p>
                     </div>
                 </div>
             </div>
