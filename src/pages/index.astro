@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import groupPhoto from '../assets/images/group-photo.webp';
+import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
 
 
 
@@ -19,6 +20,19 @@ import groupPhoto from '../assets/images/group-photo.webp';
                     <div class="hero-section__content-inner">
                         <p class="hero-section__heading">Envisioning a world where <span class="bold">everybody</span> can access care.</p>
                         <p class="hero-section__description"><span class="bold">The Easton Project</span>  is addressing the critical needs of people suffering from addiction in Quebec.</p>
+                    </div>
+                </div>
+
+                <div class="hero-section__cta">
+                    <div class="hero-section__cta-content">
+                    <h2 class="hero-section__cta-heading">Call to Action</h2>
+                    <p class="hero-section__cta-description">As a registered charity based in Montreal, <span class="bold">The Easton Project</span>  is a new initiative started in response to urgent gaps in Quebec’s addiction and mental health care systems.</p>
+                    <p class="hero-section__cta-description">We envision a future where no one in Quebec facing addiction or mental health issues is left without timely care..</p>
+                    <p class="hero-section__cta-description">With your support, The Easton Project is building a responsive, inclusive system that empowers recovery through accessible support, treatment connections, and transitional sober living.</p>
+                    <p class="hero-section__cta-description bold">Our goal is to foster healthier individuals and stronger communities.</p>
+                    </div>
+                    <div class="hero-section__cta-image">
+                        <Image src={eastonProjectPhoto} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
                     </div>
                 </div>
             </div>
