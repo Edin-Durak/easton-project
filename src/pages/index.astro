@@ -1,10 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import groupPhoto from '../assets/images/group-photo.webp';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+
 ---
 
 <Layout>
-    <h1>Easton Project</h1>
+    <main class="home-main">
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="hero-section__inner container">
+                <h1 class="hero-section__heading" id="hero-heading" hidden>Easton Project</h1>
+                <div class="hero-section__content">
+                    <div class="hero-section__content-image">
+                        <Image src={groupPhoto} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
+                    </div>
+                    <div class="hero-section__content-inner">
+                        <p class="hero-section__heading">Envisioning a world where <span class="bold">everybody</span> can access care.</p>
+                        <p class="hero-section__description"><span class="bold">The Easton Project</span>  is addressing the critical needs of people suffering from addiction in Quebec.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </Layout>

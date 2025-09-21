@@ -3,85 +3,144 @@
    ======================================== */
 
 /* ========================================
+   HOME PAGE
+   ======================================== */
+.home-main {
+  .hero-section {
+    padding-top: 0;
+  }
+
+  .hero-section__content {
+    display: flex;
+    gap: 0;
+    position: relative;
+  }
+
+  .hero-section__content::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: #1b2a306e;
+    rotate: -2deg;
+    z-index: 2;
+  }
+  .hero-section__content::after {
+    content: "";
+    position: absolute;
+    bottom: -5%;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: #1b2a30bd;
+    rotate: 2deg;
+    z-index: 2;
+  }
+
+  .hero-section__content-image {
+    flex: 0 0 65%;
+    margin-right: -10%;
+  }
+  .hero-section__content-inner {
+    background-color: var(--color-deep-charcoal);
+    padding: var(--spacing-10) var(--spacing-12);
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 10% 100%);
+  }
+
+  .hero-section__heading {
+    font-size: 1.6rem;
+    margin-bottom: var(--spacing-6);
+  }
+  .hero-section__description {
+    line-height: 1.2;
+  }
+}
+
+/* ========================================
    ABOUT PAGE
    ======================================== */
 .about {
   background-color: var(--color-deep-charcoal);
-}
+  .our-board__members {
+    display: flex;
+    gap: var(--spacing-12);
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: var(--spacing-12) auto;
+    font-family: var(--font-family-secondary);
+  }
 
-.our-board__members {
-  display: flex;
-  gap: var(--spacing-12);
-  font-size: 1.25rem;
-  max-width: 800px;
-  margin: var(--spacing-12) auto;
-  font-family: var(--font-family-secondary);
-}
+  .our-board__members:last-child {
+    max-width: 500px;
+  }
 
-.our-board__members:last-child {
-  max-width: 500px;
-}
+  .our-board__member {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    height: 100%;
+    max-width: 200px;
+  }
 
-.our-board__member {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  height: 100%;
-  max-width: 200px;
-}
+  .our-legacy {
+    background-color: var(--color-dark-navy);
+  }
 
-.our-legacy {
-  background-color: var(--color-dark-navy);
-}
+  .our-legacy__content {
+    display: flex;
+    gap: var(--spacing-14);
+    align-items: center;
+    margin: var(--spacing-12) auto;
+  }
 
-.our-legacy__content {
-  display: flex;
-  gap: var(--spacing-14);
-  align-items: center;
-  margin: var(--spacing-12) auto;
-}
+  .our-legacy__content-inner {
+    flex: 0 0 55%;
+  }
 
-.our-legacy__content-inner {
-  flex: 0 0 55%;
-}
-
-.our-legacy-image {
-  max-width: 800px;
-  margin: var(--spacing-12) auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-5);
+  .our-legacy-image {
+    max-width: 800px;
+    margin: var(--spacing-12) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+  }
 }
 
 /* Responsive Design */
 @media (max-width: 992px) {
-  .our-board__members {
-    flex-wrap: wrap;
-  }
+  .about {
+    .our-board__members {
+      flex-wrap: wrap;
+    }
 
-  .our-board__member {
-    margin: 0 auto;
-  }
+    .our-board__member {
+      margin: 0 auto;
+    }
 
-  .our-legacy__content-inner {
-    flex: 0 0 60%;
+    .our-legacy__content-inner {
+      flex: 0 0 60%;
+    }
   }
 }
 
 @media (max-width: 768px) {
-  .our-board__member-description {
-    font-size: var(--font-size-base-md);
-  }
+  .about {
+    .our-board__member-description {
+      font-size: var(--font-size-base-md);
+    }
 
-  .our-legacy__content {
-    flex-direction: column;
-    gap: var(--spacing-8);
-    margin-bottom: var(--spacing-8);
-  }
+    .our-legacy__content {
+      flex-direction: column;
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-8);
+    }
 
-  .our-legacy__content-image {
-    margin: 0 auto;
-    max-width: 500px;
+    .our-legacy__content-image {
+      margin: 0 auto;
+      max-width: 500px;
+    }
   }
 }
 
@@ -89,8 +148,3 @@
    CONTACT PAGE
    ======================================== */
 /* Contact page styles will be added when contact form is implemented */
-
-/* ========================================
-   HOME PAGE
-   ======================================== */
-/* Home page styles will be added when home content is implemented */
