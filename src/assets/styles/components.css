@@ -412,6 +412,25 @@
     box-shadow: 0px 4px 4px 0px #00000040;
   }
 
+  /* Override browser autofill styles */
+  .contact__input:-webkit-autofill,
+  .contact__input:-webkit-autofill:hover,
+  .contact__input:-webkit-autofill:focus,
+  .contact__input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--color-light-blue) inset !important;
+    -webkit-text-fill-color: var(--color-black) !important;
+    background-color: var(--color-light-blue) !important;
+    background-image: none !important;
+    color: var(--color-black) !important;
+  }
+
+  .contact__input:-internal-autofill-selected {
+    appearance: none !important;
+    background-image: none !important;
+    background-color: var(--color-light-blue) !important;
+    color: var(--color-black) !important;
+  }
+
   .contact__input::placeholder,
   .contact__textarea::placeholder {
     color: var(--color-black);
@@ -436,6 +455,34 @@
     min-height: 120px;
     font-family: inherit;
     line-height: 1.5;
+  }
+
+  /* Custom scrollbar styling for textarea */
+  .contact__textarea::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .contact__textarea::-webkit-scrollbar-track {
+    background: var(--color-deep-charcoal);
+    border-radius: var(--rounded-2xs);
+  }
+
+  .contact__textarea::-webkit-scrollbar-thumb {
+    background: var(--color-warm-beige);
+    border-radius: var(--rounded-2xs);
+    border: 1px solid var(--color-deep-charcoal);
+  }
+
+  .contact__textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dark-navy);
+  }
+
+  .contact__textarea::-webkit-scrollbar-thumb:active {
+    background: var(--color-dark-navy);
+  }
+
+  .contact__textarea::-webkit-scrollbar-corner {
+    background: var(--color-deep-charcoal);
   }
 
   .contact__form-actions {
