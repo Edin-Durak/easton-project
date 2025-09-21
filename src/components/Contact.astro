@@ -21,7 +21,7 @@ const { heading, subheading } = Astro.props;
       </p>
     )}
 
-    <form class="contact__form" method="POST" novalidate>
+    <form class="contact__form" method="POST">
       <!-- Hidden honeypot fields for bot protection -->
       <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off" />
       <input type="email" name="email_confirm" style="display: none;" tabindex="-1" autocomplete="off" />
@@ -31,30 +31,32 @@ const { heading, subheading } = Astro.props;
           <label for="firstName" class="contact__label">
             First Name
           </label>
-          <input 
-            type="text" 
-            id="firstName" 
-            name="firstName" 
-            class="contact__input" 
-            placeholder="SAMPLE"
-            required
-            autocomplete="given-name"
-          />
+           <input 
+             type="text" 
+             id="firstName" 
+             name="firstName" 
+             class="contact__input" 
+             placeholder="SAMPLE"
+             required
+             minlength="2"
+             autocomplete="given-name"
+           />
         </div>
         
         <div class="contact__form-group">
           <label for="lastName" class="contact__label">
             Last Name
           </label>
-          <input 
-            type="text" 
-            id="lastName" 
-            name="lastName" 
-            class="contact__input" 
-            placeholder="SAMPLE"
-            required
-            autocomplete="family-name"
-          />
+           <input 
+             type="text" 
+             id="lastName" 
+             name="lastName" 
+             class="contact__input" 
+             placeholder="SAMPLE"
+             required
+             minlength="2"
+             autocomplete="family-name"
+           />
         </div>
       </div>
 
@@ -62,29 +64,30 @@ const { heading, subheading } = Astro.props;
         <label for="email" class="contact__label">
           Email Address
         </label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          class="contact__input" 
-          placeholder="SAMPLE@SAMPLE.COM"
-          required
-          autocomplete="email"
-        />
+         <input 
+           type="email" 
+           id="email" 
+           name="email" 
+           class="contact__input" 
+           placeholder="SAMPLE@SAMPLE.COM"
+           required
+           autocomplete="email"
+           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+         />
       </div>
 
       <div class="contact__form-group">
         <label for="message" class="contact__label" hidden>
           Message
         </label>
-        <textarea 
-          id="message" 
-          name="message" 
-          class="contact__textarea" 
-          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in nisl eu nisi iaculis tincidunt non placerat ligula. Vivamus semper vestibulum sem a congue. In tellus metus, mattis at volutpat ac, elementum nec libero. Donec ornare ac sapien ac hendrerit. Mauris quis posuere nisi. Morbi ac metus tempor purus ornare laoreet nec non dui. Fusce cursus tortor in quam tempor, ac aliquam magna laoreet. Aliquam consectetur, dolor sed commodo laoreet, purus leo semper libero, in sollicitudin nunc nisl nec felis. Vestibulum volutpat nunc eget ex fermentum egestas. Nullam urna nisl, auctor in arcu non, sollicitudin molestie risus. Donec quam est, tristique vitae est in, mattis volutpat purus."
-          rows="10"
-          required
-        ></textarea>
+         <textarea 
+           id="message" 
+           name="message" 
+           class="contact__textarea" 
+           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in nisl eu nisi iaculis tincidunt non placerat ligula. Vivamus semper vestibulum sem a congue. In tellus metus, mattis at volutpat ac, elementum nec libero. Donec ornare ac sapien ac hendrerit. Mauris quis posuere nisi. Morbi ac metus tempor purus ornare laoreet nec non dui. Fusce cursus tortor in quam tempor, ac aliquam magna laoreet. Aliquam consectetur, dolor sed commodo laoreet, purus leo semper libero, in sollicitudin nunc nisl nec felis. Vestibulum volutpat nunc eget ex fermentum egestas. Nullam urna nisl, auctor in arcu non, sollicitudin molestie risus. Donec quam est, tristique vitae est in, mattis volutpat purus."
+           rows="10"
+           required
+         ></textarea>
       </div>
 
       <div class="contact__form-actions">
