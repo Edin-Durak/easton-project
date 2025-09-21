@@ -352,6 +352,188 @@
 }
 
 /* ========================================
+   CONTACT COMPONENT
+   ======================================== */
+.contact {
+  .contact__inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-10);
+  }
+
+  .contact__heading {
+    color: var(--color-warm-beige);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 var(--spacing-6) 0;
+    line-height: 1.2;
+  }
+
+  .contact__subheading {
+    color: var(--color-warm-beige);
+    font-size: 1.25rem;
+    margin: 0 0 var(--spacing-12) 0;
+    line-height: 1.5;
+  }
+
+  .contact__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .contact__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .contact__form-group > textarea {
+    margin-top: var(--spacing-12);
+  }
+
+  .contact__label {
+    color: var(--color-warm-beige);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-2);
+  }
+
+  .contact__input,
+  .contact__textarea {
+    background-color: var(--color-light-blue);
+    border: 2px solid transparent;
+    border-radius: var(--rounded);
+    padding: var(--spacing-4) var(--spacing-5);
+    font-size: 1rem;
+    color: var(--color-black);
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: var(--color-black);
+    opacity: 0.7;
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    outline: none;
+    border-color: var(--color-warm-beige);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 0 0 3px rgba(221, 189, 146, 0.2);
+  }
+
+  .contact__input:hover,
+  .contact__textarea:hover {
+    border-color: var(--color-warm-beige);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    line-height: 1.5;
+  }
+
+  .contact__form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--spacing-10);
+  }
+
+  .contact__button {
+    background-color: var(--color-dark-green);
+    color: var(--color-warm-beige);
+    border: 2px solid var(--color-dark-green);
+    border-radius: var(--rounded-full);
+    padding: var(--spacing-4) var(--spacing-10);
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .contact__button:hover {
+    background-color: var(--color-warm-beige);
+    color: var(--color-dark-green);
+    border-color: var(--color-warm-beige);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .contact__button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .contact__button:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(221, 189, 146, 0.3);
+  }
+}
+
+/* Contact Form Responsive Design */
+@media (max-width: 768px) {
+  .contact {
+    .contact__heading {
+      font-size: 2rem;
+    }
+
+    .contact__subheading {
+      font-size: 1.125rem;
+    }
+
+    .contact__form {
+      padding: var(--spacing-8);
+    }
+
+    .contact__form-row {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+    }
+
+    .contact__form-actions {
+      justify-content: center;
+    }
+
+    .contact__button {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .contact {
+    .contact__form {
+      padding: var(--spacing-6);
+    }
+
+    .contact__heading {
+      font-size: 1.75rem;
+    }
+
+    .contact__subheading {
+      font-size: 1rem;
+    }
+
+    .contact__label {
+      font-size: 1rem;
+    }
+
+    .contact__input,
+    .contact__textarea {
+      font-size: 0.9rem;
+      padding: var(--spacing-3) var(--spacing-4);
+    }
+  }
+}
+
+/* ========================================
    SCROLL TO TOP COMPONENT
    ======================================== */
 .scroll-to-top {
