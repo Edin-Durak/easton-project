@@ -5,6 +5,7 @@ import groupPhoto from '../assets/images/group-photo.webp';
 import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
 import mikeCoFounderPhoto from '../assets/images/mike-co-founder-photo.webp';
 import huggingPhoto from '../assets/images/hugging-photo.webp';
+import ContactComponent from '../components/Contact.astro';
 
 
 
@@ -73,6 +74,31 @@ import huggingPhoto from '../assets/images/hugging-photo.webp';
                     </div>
                 </div>
             </div>
+        </section>
+        <section class="join-us" aria-labelledby="join-us-heading">
+            <h2 class="join-us__heading" id="join-us-heading" hidden>Join Us</h2>
+            <div class="join-us__inner container">
+            <div class="join-us__content">
+                <h2 class="join-us__heading">Be Part of the Solution</h2>
+                <p class="join-us__description">The Easton Project thrives because of people like you—those who care deeply about addressing addiction and mental health challenges. Whether you give time, resources, or expertise, your support helps ensure no one is left behind when seeking help.</p>
+                <div class="join-us__activities">
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Donate</h3>
+                        <p class="join-us__activities-item-description">Your tax-deductible donations will help fund treatment subsidies, emergency referrals, and the development of our sober living home.</p>
+                    </div>
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Volunteer</h3>
+                        <p class="join-us__activities-item-description">Lend your time to support outreach efforts, fundraising events, and the day-to-day operations that keep The Easton Project running.</p>
+                    </div>
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Partner as a Professional</h3>
+                        <p class="join-us__activities-item-description">By offering your services and joining our trusted referral network, practitioners can greatly help us expand access to timely, trauma-informed care.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <ContactComponent heading="Contact Us"/>
         </section>
     </main>
 </Layout>
