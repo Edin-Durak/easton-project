@@ -215,6 +215,8 @@ const PDFJS_VERSION = "3.12.0"; // Update version number
 npm run download-pdfjs
 ```
 
+**Note**: The script uses ES module syntax and works with your `"type": "module"` package.json configuration.
+
 ### Adding New PDF Files
 
 1. **Copy PDF to public directory**:
