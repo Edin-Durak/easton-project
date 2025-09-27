@@ -6,6 +6,7 @@ import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
 import mikeCoFounderPhoto from '../assets/images/mike-co-founder-photo.webp';
 import huggingPhoto from '../assets/images/hugging-photo.webp';
 import ContactComponent from '../components/Contact.astro';
+import PDFViewer from '../components/PDFViewer.astro';
 
 
 
@@ -75,6 +76,8 @@ import ContactComponent from '../components/Contact.astro';
                 </div>
             </div>
         </section>
+        <PDFViewer heading="Annual Report 2024" pdfPath="/easton-project/pdf/example-pdf.pdf" />
+        
         <section class="join-us" aria-labelledby="join-us-heading">
             <h2 class="join-us__heading" id="join-us-heading" hidden>Join Us</h2>
             <div class="join-us__inner container">
