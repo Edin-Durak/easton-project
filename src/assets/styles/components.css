@@ -603,10 +603,15 @@
 
 .pdf-viewer__controls {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: var(--spacing-8);
   margin-bottom: var(--spacing-12);
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .pdf-viewer__btn {
@@ -720,6 +725,10 @@
 
   .pdf-viewer__controls {
     margin-bottom: var(--spacing-8);
+    position: static;
+    left: auto;
+    top: auto;
+    transform: none;
   }
 
   .pdf-viewer__btn {
@@ -728,8 +737,14 @@
     padding: var(--spacing-2);
   }
 
+  .pdf-viewer__btn:hover:not(:disabled) {
+    transform: none;
+    box-shadow: none;
+  }
+
   .pdf-viewer__container {
     min-height: 300px;
+    flex-direction: column;
   }
 
   .pdf-viewer__loading {
