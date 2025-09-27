@@ -702,6 +702,12 @@
   }
 }
 
+@media (max-width: 991px) {
+  .pdf-viewer__canvas--desktop {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .pdf-viewer {
     padding: var(--spacing-12) 0;
