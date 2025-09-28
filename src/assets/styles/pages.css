@@ -169,6 +169,43 @@
     margin-bottom: var(--spacing-4);
     font-size: 1.25rem;
   }
+
+  .join-us {
+    background-image: url("/src/assets/images/team-photo-desktop.webp");
+    background-size: cover;
+    background-position: left 0 top 25%;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .join-us::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/src/assets/images/team-photo-mask-desktop.webp");
+    background-size: cover;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    mask: url("/src/assets/images/team-photo-mask-desktop.webp");
+    mask-size: cover;
+    mask-position: bottom right;
+    mask-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .join-us {
+    .pdf-viewer,
+    .join-us__inner,
+    .contact {
+      position: relative;
+      z-index: 2;
+    }
+  }
 }
 
 /* ========================================
@@ -302,6 +339,15 @@
     .our-mission__activities-item,
     .join-us__activities-item {
       padding: var(--spacing-7);
+    }
+
+    .join-us {
+      background-image: url("/src/assets/images/team-photo-mobile.webp");
+    }
+
+    .join-us::before {
+      background-image: url("/src/assets/images/team-photo-mask-mobile.webp");
+      mask: url("/src/assets/images/team-photo-mask-mobile.webp");
     }
   }
   .about {

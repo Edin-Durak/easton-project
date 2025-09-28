@@ -584,7 +584,6 @@
    PDF VIEWER COMPONENT
    ======================================== */
 .pdf-viewer {
-  background-color: var(--color-deep-charcoal);
   padding: var(--spacing-14) 0;
 }
 
