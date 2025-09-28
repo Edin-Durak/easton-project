@@ -3,7 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import groupPhotoDesktop from '../assets/images/group-photo-desktop.webp';
 import groupPhotoMobile from '../assets/images/group-photo-mobile.webp';
-import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
+import eastonProjectPhotoDesktop from '../assets/images/easton-project-photo-desktop.webp';
+import eastonProjectPhotoMobile from '../assets/images/easton-project-photo-mobile.webp';
 import mikeCoFounderPhotoDesktop from '../assets/images/mike-co-founder-photo-desktop.webp';
 import mikeCoFounderPhotoMobile from '../assets/images/mike-co-founder-photo-mobile.webp';
 import huggingPhoto from '../assets/images/hugging-photo.webp';
@@ -48,7 +49,15 @@ import PDFViewer from '../components/PDFViewer.astro';
                     <p class="hero-section__cta-description bold">Our goal is to foster healthier individuals and stronger communities.</p>
                     </div>
                     <div class="hero-section__cta-image">
-                        <Image src={eastonProjectPhoto} alt="Easton Project"  loading="lazy" format='avif'  />
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={eastonProjectPhotoDesktop.src} />
+                            <Image 
+                              src={eastonProjectPhotoMobile} 
+                              alt="Easton Project"
+                              loading="lazy"
+                              format="avif"
+                            />
+                        </picture>
                     </div>
                 </div>
             </div>
