@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import groupPhoto from '../assets/images/group-photo.webp';
+import groupPhotoDesktop from '../assets/images/group-photo-desktop.webp';
+import groupPhotoMobile from '../assets/images/group-photo-mobile.webp';
 import eastonProjectPhoto from '../assets/images/easton-project-photo.webp';
-import mikeCoFounderPhoto from '../assets/images/mike-co-founder-photo.webp';
+import mikeCoFounderPhotoDesktop from '../assets/images/mike-co-founder-photo-desktop.webp';
+import mikeCoFounderPhotoMobile from '../assets/images/mike-co-founder-photo-mobile.webp';
 import huggingPhoto from '../assets/images/hugging-photo.webp';
 import ContactComponent from '../components/Contact.astro';
 import PDFViewer from '../components/PDFViewer.astro';
@@ -19,7 +21,12 @@ import PDFViewer from '../components/PDFViewer.astro';
                 <h1 class="hero-section__heading" id="hero-heading" hidden>Easton Project</h1>
                 <div class="hero-section__content">
                     <div class="hero-section__content-image">
-                        <Image src={groupPhoto} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
+                        <picture >
+                            <source srcset={groupPhotoDesktop} media="(min-width: 768px)">
+                            <source srcset={groupPhotoMobile} media="(max-width: 767px)">
+                            <Image src={groupPhotoDesktop} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
+                        </picture>
+                        
                     </div>
                     <div class="hero-section__content-inner">
                         <p class="hero-section__heading">Envisioning a world where <span class="bold">everybody</span> can access care.</p>
@@ -46,7 +53,12 @@ import PDFViewer from '../components/PDFViewer.astro';
 
                 <div class="our-mission__ceo">
                     <div class="our-mission__ceo-photo">
-                        <Image src={mikeCoFounderPhoto} alt="Mike - Co-Founder"  loading="lazy" format='avif'  />
+                        <picture></picture>
+                            <source srcset={mikeCoFounderPhotoDesktop} media="(min-width: 768px)">
+                            <source srcset={mikeCoFounderPhotoMobile} media="(max-width: 767px)">
+                            <Image src={mikeCoFounderPhotoDesktop} alt="Mike - Co-Founder"  loading="lazy" format='avif'  />
+                        </picture>
+                        
                     </div>
                     <div class="our-mission__ceo-info">                        
                         <p class="our-mission__ceo-description">“After spending a decade as the director of Andy's House Treatment Centre, it became painfully clear that despite our best efforts, there are simply not enough resources or funding available for individuals struggling with addiction and mental health challenges in Quebec.</p>
