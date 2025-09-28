@@ -15,7 +15,18 @@ import PDFViewer from '../components/PDFViewer.astro';
 
 ---
 
-<Layout>
+<Layout 
+  title="Easton Project"
+  description="Easton Project - Making a difference in our community"
+  keywords="charity, community, montreal, easton project"
+  ogImage="/og-image.png"
+  preloadImages={[
+    { src: groupPhotoMobile.src, media: "(max-width: 767px)" },
+    { src: groupPhotoDesktop.src, media: "(min-width: 768px)" },
+    { src: eastonProjectPhotoMobile.src, media: "(max-width: 767px)" },
+    { src: eastonProjectPhotoDesktop.src, media: "(min-width: 768px)" }
+  ]}
+>
     <main class="home-main">
         <section class="hero-section" aria-labelledby="hero-heading">
             <div class="hero-section__inner container">
@@ -27,7 +38,7 @@ import PDFViewer from '../components/PDFViewer.astro';
                             <Image 
                               src={groupPhotoMobile} 
                               alt="Easton Project"
-                              loading="lazy"
+                              loading="eager"
                               format="avif"
                               fetchpriority="high"
                             />
@@ -54,7 +65,7 @@ import PDFViewer from '../components/PDFViewer.astro';
                             <Image 
                               src={eastonProjectPhotoMobile} 
                               alt="Easton Project"
-                              loading="lazy"
+                              loading="eager"
                               format="avif"
                             />
                         </picture>

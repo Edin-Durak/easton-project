@@ -10,9 +10,10 @@ export interface Props {
 	description?: string;
 	keywords?: string;
 	ogImage?: string;
+	preloadImages?: Array<{ src: string; media?: string }>;
 }
 
-const { title = "Easton Project", description = "Easton Project - Making a difference in our community", keywords = "charity, community, montreal, easton project", ogImage = "/og-image.png" } = Astro.props;
+const { title = "Easton Project", description = "Easton Project - Making a difference in our community", keywords = "charity, community, montreal, easton project", ogImage = "/og-image.png", preloadImages = [] } = Astro.props;
 ---
 
 
@@ -23,9 +24,30 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		
+		<!-- DNS prefetch for external resources -->
+		<link rel="dns-prefetch" href="//fonts.googleapis.com" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
+		
+		<!-- Preload critical CSS -->
+		<link rel="preload" href="/src/assets/styles/main.css" as="style" />
+		
+		<!-- Preload critical fonts -->
+		<link rel="preload" href="/fonts/Figtree/Figtree-Regular.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/Figtree/Figtree-Bold.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/Inria-Serif/InriaSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
+		
+		<!-- Preload critical images -->
+		{preloadImages.map((image) => (
+			<link 
+				rel="preload" 
+				as="image" 
+				href={image.src} 
+				{...(image.media && { media: image.media })}
+			/>
+		))}
 		
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
