@@ -55,6 +55,8 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
       this.loadingEl = document.getElementById('pdf-loading');
       this.prevBtn = document.querySelector('.pdf-viewer__btn--prev');
       this.nextBtn = document.querySelector('.pdf-viewer__btn--next');
+      this.renderTasks = [];
+      this.isDestroyed = false;
       
       this.init();
     }
@@ -109,7 +111,7 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
     }
 
     async renderPages() {
-      if (!this.pdfDoc) return;
+      if (!this.pdfDoc || this.isDestroyed) return;
 
       try {
         if (this.isDesktop) {
@@ -120,14 +122,23 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
           await this.renderSinglePage();
         }
         
-        this.updateNavigation();
+        if (!this.isDestroyed) {
+          this.updateNavigation();
+        }
       } catch (error) {
-        console.error('Error rendering pages:', error);
-        this.showError('Failed to render PDF pages');
+        if (!this.isDestroyed) {
+          console.error('Error rendering pages:', error);
+          this.showError('Failed to render PDF pages');
+        }
       }
     }
 
     async renderSinglePage() {
+      if (this.isDestroyed) return;
+      
+      // Cancel any existing render tasks
+      this.cancelRenderTasks();
+      
       const page = await this.pdfDoc.getPage(this.currentPage);
       const viewport = page.getViewport({ scale: this.scale });
       
@@ -141,10 +152,18 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
         viewport: viewport
       };
       
-      await page.render(renderContext).promise;
+      const renderTask = page.render(renderContext);
+      this.renderTasks.push(renderTask);
+      
+      await renderTask.promise;
     }
 
     async renderTwoPages() {
+      if (this.isDestroyed) return;
+      
+      // Cancel any existing render tasks
+      this.cancelRenderTasks();
+      
       const page1 = await this.pdfDoc.getPage(this.currentPage);
       const page2 = this.currentPage + 1 <= this.totalPages ? 
         await this.pdfDoc.getPage(this.currentPage + 1) : null;
@@ -162,7 +181,9 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
         viewport: viewport1
       };
       
-      await page1.render(renderContext1).promise;
+      const renderTask1 = page1.render(renderContext1);
+      this.renderTasks.push(renderTask1);
+      await renderTask1.promise;
       
       // Render second page if exists
       if (page2 && viewport2) {
@@ -175,7 +196,9 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
           viewport: viewport2
         };
         
-        await page2.render(renderContext2).promise;
+        const renderTask2 = page2.render(renderContext2);
+        this.renderTasks.push(renderTask2);
+        await renderTask2.promise;
       } else {
         this.canvas2.style.display = 'none';
       }
@@ -228,6 +251,34 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
       }
     }
 
+    cancelRenderTasks() {
+      this.renderTasks.forEach(task => {
+        if (task && typeof task.cancel === 'function') {
+          task.cancel();
+        }
+      });
+      this.renderTasks = [];
+    }
+
+    destroy() {
+      this.isDestroyed = true;
+      this.cancelRenderTasks();
+      
+      // Remove event listeners
+      if (this.prevBtn) {
+        this.prevBtn.removeEventListener('click', this.prevPage);
+      }
+      if (this.nextBtn) {
+        this.nextBtn.removeEventListener('click', this.nextPage);
+      }
+      
+      // Clean up PDF document
+      if (this.pdfDoc) {
+        this.pdfDoc.destroy();
+        this.pdfDoc = null;
+      }
+    }
+
     setupEventListeners() {
       this.prevBtn.addEventListener('click', () => this.prevPage());
       this.nextBtn.addEventListener('click', () => this.nextPage());
@@ -244,16 +295,39 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
     }
   }
 
+  // Global instance management
+  let pdfViewerInstance = null;
+
   // Initialize PDF viewer when DOM is ready
   function initPDFViewer() {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => new PDFViewer());
-    } else {
-      new PDFViewer();
+    // Clean up existing instance
+    if (pdfViewerInstance) {
+      pdfViewerInstance.destroy();
+      pdfViewerInstance = null;
     }
+
+    // Check if PDF viewer elements exist
+    const canvas1 = document.getElementById('pdf-canvas-1');
+    if (!canvas1) return;
+
+    // Create new instance
+    pdfViewerInstance = new PDFViewer();
   }
 
   // Initialize on page load and after view transitions
-  initPDFViewer();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPDFViewer);
+  } else {
+    initPDFViewer();
+  }
+  
   document.addEventListener('astro:page-load', initPDFViewer);
+  
+  // Clean up on page unload
+  document.addEventListener('astro:before-preparation', () => {
+    if (pdfViewerInstance) {
+      pdfViewerInstance.destroy();
+      pdfViewerInstance = null;
+    }
+  });
 </script>
