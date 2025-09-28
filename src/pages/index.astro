@@ -21,11 +21,16 @@ import PDFViewer from '../components/PDFViewer.astro';
                 <h1 class="hero-section__heading" id="hero-heading" hidden>Easton Project</h1>
                 <div class="hero-section__content">
                     <div class="hero-section__content-image">
-                        <picture >
-                            <source srcset={groupPhotoDesktop} media="(min-width: 768px)">
-                            <source srcset={groupPhotoMobile} media="(max-width: 767px)">
-                            <Image src={groupPhotoDesktop} alt="Easton Project"  loading="lazy" format='avif' fetchpriority='high' />
-                        </picture>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={groupPhotoDesktop.src} />
+                            <Image 
+                              src={groupPhotoMobile} 
+                              alt="Easton Project"
+                              loading="lazy"
+                              format="avif"
+                              fetchpriority="high"
+                            />
+                          </picture>
                         
                     </div>
                     <div class="hero-section__content-inner">
@@ -53,10 +58,14 @@ import PDFViewer from '../components/PDFViewer.astro';
 
                 <div class="our-mission__ceo">
                     <div class="our-mission__ceo-photo">
-                        <picture></picture>
-                            <source srcset={mikeCoFounderPhotoDesktop} media="(min-width: 768px)">
-                            <source srcset={mikeCoFounderPhotoMobile} media="(max-width: 767px)">
-                            <Image src={mikeCoFounderPhotoDesktop} alt="Mike - Co-Founder"  loading="lazy" format='avif'  />
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={mikeCoFounderPhotoDesktop.src} />
+                            <Image 
+                              src={mikeCoFounderPhotoMobile} 
+                              alt="Mike - Co-Founder"
+                              loading="lazy"
+                              format="avif"
+                            />
                         </picture>
                         
                     </div>
