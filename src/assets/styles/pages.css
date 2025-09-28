@@ -276,6 +276,15 @@
       flex: 0 0 50%;
     }
 
+    .our-mission {
+      background-image: url("/src/assets/images/hugging-photo-mobile.webp");
+    }
+
+    .our-mission::before {
+      background-image: url("/src/assets/images/hugging-mask-mobile.webp");
+      mask: url("/src/assets/images/hugging-mask-mobile.webp");
+    }
+
     .our-mission__ceo {
       gap: var(--spacing-8);
     }
