@@ -236,8 +236,38 @@
 
   .our-legacy {
     background-color: var(--color-dark-navy);
+    background-image: url("/src/assets/images/legacy-photo-desktop.webp");
+    background-size: cover;
+    background-position: left 0 top 25%;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
   }
 
+  .our-legacy::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/src/assets/images/legacy-mask-photo-desktop.webp");
+    background-size: cover;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    mask: url("/src/assets/images/legacy-mask-photo-desktop.webp");
+    mask-size: cover;
+    mask-position: bottom right;
+    mask-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .our-legacy {
+    .our-legacy__content {
+      position: relative;
+      z-index: 2;
+    }
+  }
   .our-legacy__content {
     display: flex;
     gap: var(--spacing-14);
@@ -357,6 +387,15 @@
 
     .our-board__member {
       margin: 0 auto;
+    }
+
+    .our-legacy {
+      background-image: url("/src/assets/images/legacy-photo-mobile.webp");
+    }
+
+    .our-legacy::before {
+      background-image: url("/src/assets/images/legacy-mask-photo-mobile.webp");
+      mask: url("/src/assets/images/legacy-mask-photo-mobile.webp");
     }
 
     .our-legacy__content-inner {
@@ -480,8 +519,26 @@
 
 @media (max-width: 576px) {
   .home-main {
-    .our-mission::before {
-      display: none;
+    .our-mission,
+    .join-us {
+      background-image: none;
+    }
+
+    .our-mission::before,
+    .join-us::before {
+      background-image: none;
+      mask: none;
+    }
+  }
+
+  .about {
+    .our-legacy {
+      background-image: none;
+    }
+
+    .our-legacy::before {
+      background-image: none;
+      mask: none;
     }
   }
 }
