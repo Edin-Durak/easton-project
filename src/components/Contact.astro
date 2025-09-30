@@ -21,7 +21,10 @@ const { heading, subheading } = Astro.props;
       </p>
     )}
 
-    <form class="contact__form" method="POST">
+    <form class="contact__form" id="contact-form" method="POST">
+      <!-- Web3Forms access key - Replace with your actual key -->
+      <input type="hidden" name="access_key" value="dbad2c60-00af-4397-9ace-758583644b0c">
+      
       <!-- Hidden honeypot fields for bot protection -->
       <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off" />
       <input type="email" name="email_confirm" style="display: none;" tabindex="-1" autocomplete="off" />
@@ -91,10 +94,71 @@ const { heading, subheading } = Astro.props;
       </div>
 
       <div class="contact__form-actions">
-        <button type="submit" class="contact__button">
+        <button type="submit" class="contact__button" id="submit-btn">
           Send
         </button>
       </div>
+      
+      <!-- Form result message -->
+      <div id="form-result" class="contact__result" style="display: none;"></div>
     </form>
   </div>
 </section>
+
+<script is:inline>
+  const form = document.getElementById('contact-form');
+  const result = document.getElementById('form-result');
+  const submitBtn = document.getElementById('submit-btn');
+
+  if (form && result && submitBtn) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      result.style.display = 'block';
+      result.innerHTML = 'Please wait...';
+      result.className = 'contact__result contact__result--loading';
+
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+          result.innerHTML = json.message;
+          result.className = 'contact__result contact__result--success';
+          form.reset();
+        } else {
+          result.innerHTML = json.message || 'Something went wrong. Please try again.';
+          result.className = 'contact__result contact__result--error';
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        result.innerHTML = 'Something went wrong. Please try again.';
+        result.className = 'contact__result contact__result--error';
+      })
+      .finally(() => {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send';
+        
+        // Hide result message after 5 seconds
+        setTimeout(() => {
+          result.style.display = 'none';
+        }, 5000);
+      });
+    });
+  }
+</script>
