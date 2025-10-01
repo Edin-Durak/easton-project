@@ -737,6 +737,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   max-width: 100%;
   height: auto;
+  border: 1px solid var(--color-warm-beige);
 }
 
 .pdf-viewer__canvas--desktop {
