@@ -296,26 +296,33 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
         };
         document.addEventListener('keydown', handleEscape);
 
-        // Render PayPal button
-        if (typeof (window as any).PayPal !== 'undefined') {
-            (window as any).PayPal.Donation.Button({
-                env: 'production',
-                hosted_button_id: 'ETVKFLEWWXSQC',
-                image: {
-                    src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
-                    title: 'PayPal - The safer, easier way to pay online!',
-                    alt: 'Donate with PayPal button'
-                },
-                onComplete: function (params: any) {
-                    console.log('Donation completed:', params);
-                    closeModal();
-                },
-                onError: function (error: any) {
-                    console.error('PayPal donation error:', error);
-                    closeModal();
-                }
-            }).render('#paypal-donate-modal-container');
+        // Render PayPal button with optimized loading
+        function renderPayPalButton() {
+            if (typeof (window as any).PayPal !== 'undefined') {
+                (window as any).PayPal.Donation.Button({
+                    env: 'production',
+                    hosted_button_id: 'ETVKFLEWWXSQC',
+                    image: {
+                        src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+                        title: 'PayPal - The safer, easier way to pay online!',
+                        alt: 'Donate with PayPal button'
+                    },
+                    onComplete: function (params: any) {
+                        console.log('Donation completed:', params);
+                        closeModal();
+                    },
+                    onError: function (error: any) {
+                        console.error('PayPal donation error:', error);
+                        closeModal();
+                    }
+                }).render('#paypal-donate-modal-container');
+            } else {
+                // Retry if PayPal SDK not loaded yet
+                setTimeout(renderPayPalButton, 100);
+            }
         }
+        
+        renderPayPalButton();
     }
 
     // Setup donate button event listeners
