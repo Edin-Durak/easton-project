@@ -29,6 +29,22 @@ const { heading, subheading } = Astro.props;
       <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off" />
       <input type="email" name="email_confirm" style="display: none;" tabindex="-1" autocomplete="off" />
       
+      
+      <div class="contact__form-group contact__form-group--subject">
+        <label for="subject" class="contact__label">
+          Subject
+        </label>
+         <input 
+           type="text" 
+           id="subject" 
+           name="subject" 
+           class="contact__input" 
+           placeholder="Enter your subject"
+           required
+           minlength="3"
+         />
+      </div>
+      
       <div class="contact__form-row">
         <div class="contact__form-group">
           <label for="firstName" class="contact__label">
@@ -75,7 +91,6 @@ const { heading, subheading } = Astro.props;
            placeholder="SAMPLE@SAMPLE.COM"
            required
            autocomplete="email"
-           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
          />
       </div>
 
@@ -123,7 +138,49 @@ const { heading, subheading } = Astro.props;
 
       const formData = new FormData(form);
       const object = Object.fromEntries(formData);
-      const json = JSON.stringify(object);
+      
+      // Remove honeypot fields - they should not be sent to Web3Forms
+      delete object.website;
+      delete object.email_confirm;
+      
+      // Combine firstName and lastName into name field (Web3Forms expects 'name')
+      if (object.firstName && object.lastName) {
+        object.name = `${object.firstName} ${object.lastName}`;
+        delete object.firstName;
+        delete object.lastName;
+      }
+      
+      // Handle subject field - try different approaches
+      const subjectField = form.querySelector('input[name="subject"]');
+      if (subjectField && subjectField.value.trim()) {
+        // Try using 'from_name' which Web3Forms might recognize
+        object.from_name = subjectField.value.trim();
+        // Also keep subject field
+        object.subject = subjectField.value.trim();
+        // And prepend to message for visibility
+        object.message = `Subject: ${subjectField.value.trim()}\n\n${object.message}`;
+      }
+      
+      // Reorder fields for better email display: Email, Name, Message
+      const orderedObject = {
+        access_key: object.access_key,
+        email: object.email,
+        name: object.name,
+        message: object.message
+      };
+      
+      // Add subject fields if they exist
+      if (object.subject) {
+        orderedObject.subject = object.subject;
+      }
+      if (object.from_name) {
+        orderedObject.from_name = object.from_name;
+      }
+      
+      const json = JSON.stringify(orderedObject);
+      
+      // Debug: Log the form data being sent
+      console.log('Form data being sent:', orderedObject);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
