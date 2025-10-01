@@ -8,17 +8,12 @@
 .home-main {
   .hero-section {
     padding-top: 0;
-
-    .container {
-      max-width: none;
-    }
   }
 
   .hero-section__content {
     display: flex;
     gap: 0;
     position: relative;
-    max-width: 1300px;
     margin: 0 auto;
   }
 
