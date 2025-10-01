@@ -91,6 +91,8 @@ const { heading, subheading } = Astro.props;
            placeholder="SAMPLE@SAMPLE.COM"
            required
            autocomplete="email"
+           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+           title="Please enter a valid email address (e.g., user@example.com)"
          />
       </div>
 
@@ -126,8 +128,29 @@ const { heading, subheading } = Astro.props;
   const submitBtn = document.getElementById('submit-btn');
 
   if (form && result && submitBtn) {
+    // Email validation patterns
+    const emailPatterns = [
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Standard email
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, // With 2-4 char TLD
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\.[a-zA-Z]{2,}$/ // Multi-level TLD
+    ];
+    
+    function validateEmail(email) {
+      return emailPatterns.some(pattern => pattern.test(email));
+    }
+    
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      
+      // Validate email before submission
+      const emailField = form.querySelector('input[name="email"]');
+      if (emailField && !validateEmail(emailField.value.trim())) {
+        result.style.display = 'block';
+        result.innerHTML = 'Please enter a valid email address (e.g., user@example.com)';
+        result.className = 'contact__result contact__result--error';
+        emailField.focus();
+        return;
+      }
       
       // Disable submit button and show loading state
       submitBtn.disabled = true;
