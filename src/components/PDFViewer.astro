@@ -57,11 +57,35 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
       this.nextBtn = document.querySelector('.pdf-viewer__btn--next');
       this.renderTasks = [];
       this.isDestroyed = false;
+      this.isLoaded = false;
       
-      this.init();
+      this.initLazyLoading();
     }
 
-    async init() {
+    initLazyLoading() {
+      // Use Intersection Observer to load PDF when it comes into view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.isLoaded) {
+            // Load PDF when it comes into view
+            this.loadPDFViewer();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { 
+        rootMargin: '200px' // Start loading 200px before it comes into view
+      });
+      
+      // Observe the PDF viewer container
+      const container = document.querySelector('.pdf-viewer');
+      if (container) {
+        observer.observe(container);
+      }
+    }
+
+    async loadPDFViewer() {
+      if (this.isLoaded) return;
+      
       try {
         // Load PDF.js dynamically
         await this.loadPDFJS();
@@ -75,10 +99,17 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
         // Initial render
         this.renderPages();
         
+        this.isLoaded = true;
+        
       } catch (error) {
         console.error('PDF Viewer initialization failed:', error);
         this.showError('Failed to load PDF viewer');
       }
+    }
+
+    async init() {
+      // This method is kept for compatibility but not used in lazy loading
+      await this.loadPDFViewer();
     }
 
     async loadPDFJS() {
