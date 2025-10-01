@@ -401,6 +401,10 @@
 
 @media (max-width: 825px) {
   .home-main {
+    .hero-section__inner.container {
+      padding: 0;
+    }
+
     .hero-section__content {
       gap: var(--spacing-5);
       flex-direction: column-reverse;
@@ -416,6 +420,12 @@
     .hero-section__content-image {
       flex: 0 0 100%;
       max-width: 100%;
+      margin-right: 0;
+      width: 100%;
+
+      img {
+        width: 100%;
+      }
     }
     .hero-section__content-inner {
       background: #2f3c4182;
@@ -423,12 +433,16 @@
       flex: 0 0 100%;
       position: absolute;
       bottom: 0;
-      left: 5%;
+      left: 0;
       align-items: start;
     }
 
     .hero-section__heading {
       font-size: 1.5rem;
+    }
+
+    .hero-section__cta {
+      padding: 0 var(--spacing-8);
     }
   }
 }
