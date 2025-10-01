@@ -660,7 +660,7 @@
 }
 
 .pdf-viewer__inner {
-  max-width: 900px;
+  /*max-width: 900px; */
 }
 
 .pdf-viewer__heading {
