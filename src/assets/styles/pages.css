@@ -580,11 +580,6 @@
   }
 }
 
-@media (max-width: 430px) {
-  .home-main {
-  }
-}
-
 @media (max-width: 400px) {
   .home-main {
     .hero-section__content-inner {
