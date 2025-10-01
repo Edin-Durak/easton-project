@@ -31,13 +31,11 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
 		
-		<!-- Preload critical CSS -->
-		<link rel="preload" href="/src/assets/styles/main.css" as="style" />
 		
 		<!-- Preload critical fonts -->
-		<link rel="preload" href="/fonts/Figtree/Figtree-Regular.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/fonts/Figtree/Figtree-Bold.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/fonts/Inria-Serif/InriaSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/easton-project/fonts/Figtree/Figtree-Regular.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/easton-project/fonts/Figtree/Figtree-Bold.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/easton-project/fonts/Inria-Serif/InriaSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
 		
 		<!-- Preload critical images -->
 		{preloadImages.map((image) => (
