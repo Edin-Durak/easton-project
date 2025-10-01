@@ -463,6 +463,17 @@
       display: none;
     }
 
+    .join-us,
+    .our-mission {
+      background-image: none;
+    }
+
+    .join-us::before,
+    .our-mission::before {
+      background-image: none;
+      mask: none;
+    }
+
     .our-mission__ceo {
       gap: var(--spacing-8);
       flex-direction: column;
