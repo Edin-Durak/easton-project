@@ -660,7 +660,7 @@
 }
 
 .pdf-viewer__inner {
-  /*max-width: 900px; */
+  max-width: 1450px;
 }
 
 .pdf-viewer__heading {
@@ -744,6 +744,19 @@
 }
 
 /* PDF Viewer Responsive Design */
+
+@media (max-width: 1600px) {
+  .pdf-viewer__inner {
+    max-width: 1300px;
+  }
+}
+
+@media (max-width: 1450px) {
+  .pdf-viewer__inner {
+    max-width: 1000px;
+  }
+}
+
 @media (max-width: 992px) {
   .pdf-viewer__heading {
     font-size: 2rem;
