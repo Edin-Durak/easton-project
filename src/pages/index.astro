@@ -1,10 +1,151 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import groupPhotoDesktop from '../assets/images/group-photo-desktop.webp';
+import groupPhotoMobile from '../assets/images/group-photo-mobile.webp';
+import eastonProjectPhotoDesktop from '../assets/images/easton-project-photo-desktop.webp';
+import eastonProjectPhotoMobile from '../assets/images/easton-project-photo-mobile.webp';
+import mikeCoFounderPhotoDesktop from '../assets/images/mike-co-founder-photo-desktop.webp';
+import mikeCoFounderPhotoMobile from '../assets/images/mike-co-founder-photo-mobile.webp';
+import huggingPhoto from '../assets/images/hugging-photo.webp';
+import ContactComponent from '../components/Contact.astro';
+import PDFViewer from '../components/PDFViewer.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+
 ---
 
-<Layout>
-    <h1>Easton Project</h1>
+<Layout 
+  title="Easton Project"
+  description="Easton Project - Making a difference in our community"
+  keywords="charity, community, montreal, easton project"
+  ogImage="/og-image.png"
+  preloadImages={[
+    { src: groupPhotoMobile.src, media: "(max-width: 767px)" },
+    { src: groupPhotoDesktop.src, media: "(min-width: 768px)" },
+    { src: eastonProjectPhotoMobile.src, media: "(max-width: 767px)" },
+    { src: eastonProjectPhotoDesktop.src, media: "(min-width: 768px)" }
+  ]}
+>
+    <main class="home-main">
+        <section class="hero-section" aria-labelledby="hero-heading">
+            <div class="hero-section__inner container">
+                <h1 class="hero-section__heading" id="hero-heading" hidden>Easton Project</h1>
+                <div class="hero-section__content">
+                    <div class="hero-section__content-image">
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={groupPhotoDesktop.src} />
+                            <img 
+                              src={groupPhotoMobile.src} 
+                              alt="Easton Project"
+                              loading="eager"
+                              fetchpriority="high"
+                              width="708"
+                              height="455"
+                            />
+                          </picture>
+                        
+                    </div>
+                    <div class="hero-section__content-inner">
+                        <p class="hero-section__heading">Envisioning a world where <span class="bold">everybody</span> can access care.</p>
+                        <p class="hero-section__description"><span class="bold">The Easton Project</span>  is addressing the critical needs of people suffering from addiction in Quebec.</p>
+                    </div>
+                </div>
+
+                <div class="hero-section__cta">
+                    <div class="hero-section__cta-content">
+                    <h2 class="hero-section__cta-heading">Call to Action</h2>
+                    <p class="hero-section__cta-description">As a registered charity based in Montreal, <span class="bold">The Easton Project</span>  is a new initiative started in response to urgent gaps in Quebec’s addiction and mental health care systems.</p>
+                    <p class="hero-section__cta-description">We envision a future where no one in Quebec facing addiction or mental health issues is left without timely care..</p>
+                    <p class="hero-section__cta-description">With your support, The Easton Project is building a responsive, inclusive system that empowers recovery through accessible support, treatment connections, and transitional sober living.</p>
+                    <p class="hero-section__cta-description bold">Our goal is to foster healthier individuals and stronger communities.</p>
+                    </div>
+                    <div class="hero-section__cta-image">
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={eastonProjectPhotoDesktop.src} />
+                            <img 
+                              src={eastonProjectPhotoMobile.src} 
+                              alt="Easton Project"
+                              loading="eager"
+                              width="628"
+                              height="886"
+                            />
+                        </picture>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our-mission" aria-labelledby="our-mission-heading">
+            <div class="our-mission__inner container">
+
+                <div class="our-mission__ceo">
+                    <div class="our-mission__ceo-photo">
+                        <picture>
+                            <source media="(min-width: 768px)" srcset={mikeCoFounderPhotoDesktop.src} />
+                            <Image 
+                              src={mikeCoFounderPhotoMobile} 
+                              alt="Mike - Co-Founder"
+                              loading="lazy"
+                              format="avif"
+                            />
+                        </picture>
+                        
+                    </div>
+                    <div class="our-mission__ceo-info">                        
+                        <p class="our-mission__ceo-description">“After spending a decade as the director of Andy's House Treatment Centre, it became painfully clear that despite our best efforts, there are simply not enough resources or funding available for individuals struggling with addiction and mental health challenges in Quebec.</p>
+                        <p class="our-mission__ceo-description">The Easton Project was born out of a deep commitment to help bridge these critical gaps and provide the kind of support that can transform lives.”</p>
+                        <p class="our-mission__ceo-name">Mike Weston,</p>
+                        <p class="our-mission__ceo-title italic">Co-Founder of The Easton Project</p>
+                    </div>
+                </div>
+                <h2 class="our-mission__heading" id="our-mission-heading">Our Mission & Activities</h2>
+                <p class="our-mission__description">The Easton Project is addressing urgent and persistent barriers in Quebec’s addiction and mental health system—especially those affecting English-speaking residents.</p>
+                <p class="our-mission__description">From long wait times to financial constraints and a lack of transitional housing, the path to recovery is often obstructed. </p>
+                <p class="our-mission__description">Our three-pronged model provides swift, compassionate, and practical support that helps individuals take action when they’re ready to seek help—and stay the course toward long-term healing. </p>
+
+                <div class="our-mission__activities">
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Screenings & Referrals</h3>
+                        <p class="our-mission__activities-item-description">Through phone, in-person, and video call assessments, we match individuals in need with the most suitable addiction and mental health treatment resources.</p>
+                    </div>
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Subsidization</h3>
+                        <p class="our-mission__activities-item-description">We provide funding for treatment through donations on a sliding scale fee structure. Priority is given to those with limited access to public services, but all who are seeking help  are supported.</p>
+                    </div>
+                    <div class="our-mission__activities-item">
+                        <h3 class="our-mission__activities-item-heading">Sober Living</h3>
+                        <p class="our-mission__activities-item-description">Through the operation of a sober living house, we provide people who have completed a treatment program with  safe, sober accommodations as they transition into independent living.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <section class="join-us" aria-labelledby="join-us-heading">
+            <PDFViewer heading="2025-26 Funding Drive" pdfPath="/pdf/the-easton -project-booklet.pdf" />
+            <h2 class="join-us__heading" id="join-us-heading" hidden>Join Us</h2>
+            <div class="join-us__inner container">
+            <div class="join-us__content">
+                <h2 class="join-us__heading">Be Part of the Solution</h2>
+                <p class="join-us__description">The Easton Project thrives because of people like you—those who care deeply about addressing addiction and mental health challenges. Whether you give time, resources, or expertise, your support helps ensure no one is left behind when seeking help.</p>
+                <div class="join-us__activities">
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Donate</h3>
+                        <p class="join-us__activities-item-description">Your tax-deductible donations will help fund treatment subsidies, emergency referrals, and the development of our sober living home.</p>
+                    </div>
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Volunteer</h3>
+                        <p class="join-us__activities-item-description">Lend your time to support outreach efforts, fundraising events, and the day-to-day operations that keep The Easton Project running.</p>
+                    </div>
+                    <div class="join-us__activities-item">
+                        <h3 class="join-us__activities-item-heading">Partner as a Professional</h3>
+                        <p class="join-us__activities-item-description">By offering your services and joining our trusted referral network, practitioners can greatly help us expand access to timely, trauma-informed care.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <ContactComponent heading="Contact Us"/>
+        </section>
+    </main>
 </Layout>

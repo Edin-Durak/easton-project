@@ -6,7 +6,8 @@ import davidPhoto from '../assets/images/david-photo.webp';
 import meghanPhoto from '../assets/images/meghan-photo.webp';
 import mikePhoto from '../assets/images/mike-photo.webp';
 import giordanoPhoto from '../assets/images/giordano-photo.webp';
-import descendantsPhoto from '../assets/images/descendants-photo.webp';
+import descendantsPhotoDesktop from '../assets/images/descendants-photo-desktop.webp';
+import descendantsPhotoMobile from '../assets/images/descendants-photo-mobile.webp';
 import georgeEastonPhoto from '../assets/images/george-easton-photo.webp';
 ---
 
@@ -96,7 +97,14 @@ import georgeEastonPhoto from '../assets/images/george-easton-photo.webp';
             <p class="our-legacy__description">Writing in his 1871 book <span class="italic"> Travels in America</span> on “the great contrast between Montreal’s appearance when wearing its winter garb, and when arrayed in its summer dress,” Easton concluded that “it seemed the finest city I visited in all my travels.”</p>
             <p class="our-legacy__description bold">The Easton Project has been established by George Easton’s descendants in Montreal as a tribute to his legacy of helping people suffering from substance abuse.</p>
             <div class="our-legacy-image">
-                <Image src={descendantsPhoto} alt="George Easton's Descendants" loading={'lazy'} />
+                <picture>
+                    <source media="(min-width: 768px)" srcset={descendantsPhotoDesktop.src} />
+                    <Image 
+                      src={descendantsPhotoMobile} 
+                      alt="George Easton's Descendants"
+                      format="avif"
+                    />
+                  </picture>
                 <p class="our-legacy-image__description italic">George Easton descendants (L to R) Megan Williams, Isobel Williams, David Williams and William Weston.</p>
             </div>
         </div>

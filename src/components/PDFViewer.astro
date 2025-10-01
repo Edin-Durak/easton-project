@@ -1,0 +1,364 @@
+---
+import { Image } from 'astro:assets';
+import leftArrowIcon from '../assets/images/icons/left-arrow-icon.svg';
+import rightArrowIcon from '../assets/images/icons/right-arrow-icon.svg';
+
+export interface Props {
+  heading?: string;
+  pdfPath?: string;
+}
+
+const { heading = "2025-26 Funding Drive", pdfPath = "/pdf/the-easton -project-booklet.pdf" } = Astro.props;
+---
+
+<section class="pdf-viewer" aria-labelledby="pdf-heading">
+  <div class="pdf-viewer__inner container">
+    <h2 class="pdf-viewer__heading" id="pdf-heading">{heading}</h2>
+    
+
+    
+    <div class="pdf-viewer__container">
+      <div class="pdf-viewer__loading" id="pdf-loading">
+        <p>Loading PDF...</p>
+      </div>
+      <canvas id="pdf-canvas-1" class="pdf-viewer__canvas" style="display: none;"></canvas>
+      <canvas id="pdf-canvas-2" class="pdf-viewer__canvas pdf-viewer__canvas--desktop" style="display: none;"></canvas>
+
+      <div class="pdf-viewer__controls">
+        <button class="pdf-viewer__btn pdf-viewer__btn--prev" aria-label="Previous page" disabled>
+          <Image src={leftArrowIcon} alt="" width={24} height={24}  />
+        </button>
+        <button class="pdf-viewer__btn pdf-viewer__btn--next" aria-label="Next page">
+          <Image src={rightArrowIcon} alt="" width={24} height={24} />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ pdfPath }}>
+  // PDF.js configuration - using local files for better performance
+  const PDFJS_URL = '/libs/pdf.min.js';
+  const PDF_WORKER_URL = '/libs/pdf.worker.min.js';
+  
+  class PDFViewer {
+    constructor() {
+      this.pdfDoc = null;
+      this.currentPage = 1;
+      this.totalPages = 0;
+      this.scale = 1.5;
+      this.isDesktop = window.innerWidth >= 992;
+      this.canvas1 = document.getElementById('pdf-canvas-1');
+      this.canvas2 = document.getElementById('pdf-canvas-2');
+      this.ctx1 = this.canvas1?.getContext('2d');
+      this.ctx2 = this.canvas2?.getContext('2d');
+      this.loadingEl = document.getElementById('pdf-loading');
+      this.prevBtn = document.querySelector('.pdf-viewer__btn--prev');
+      this.nextBtn = document.querySelector('.pdf-viewer__btn--next');
+      this.renderTasks = [];
+      this.isDestroyed = false;
+      this.isLoaded = false;
+      
+      this.initLazyLoading();
+    }
+
+    initLazyLoading() {
+      // Use Intersection Observer to load PDF when it comes into view
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.isLoaded) {
+            // Load PDF when it comes into view
+            this.loadPDFViewer();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { 
+        rootMargin: '200px' // Start loading 200px before it comes into view
+      });
+      
+      // Observe the PDF viewer container
+      const container = document.querySelector('.pdf-viewer');
+      if (container) {
+        observer.observe(container);
+      }
+    }
+
+    async loadPDFViewer() {
+      if (this.isLoaded) return;
+      
+      try {
+        // Load PDF.js dynamically
+        await this.loadPDFJS();
+        
+        // Load the PDF
+        await this.loadPDF(pdfPath);
+        
+        // Set up event listeners
+        this.setupEventListeners();
+        
+        // Initial render
+        this.renderPages();
+        
+        this.isLoaded = true;
+        
+      } catch (error) {
+        console.error('PDF Viewer initialization failed:', error);
+        this.showError('Failed to load PDF viewer');
+      }
+    }
+
+    async init() {
+      // This method is kept for compatibility but not used in lazy loading
+      await this.loadPDFViewer();
+    }
+
+    async loadPDFJS() {
+      return new Promise((resolve, reject) => {
+        if (window.pdfjsLib) {
+          resolve();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = PDFJS_URL;
+        script.onload = () => {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDF_WORKER_URL;
+          resolve();
+        };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    async loadPDF(url) {
+      try {
+        this.pdfDoc = await window.pdfjsLib.getDocument(url).promise;
+        this.totalPages = this.pdfDoc.numPages;
+        this.hideLoading();
+      } catch (error) {
+        console.error('Error loading PDF:', error);
+        this.showError('Failed to load PDF file');
+      }
+    }
+
+    async renderPages() {
+      if (!this.pdfDoc || this.isDestroyed) return;
+
+      try {
+        if (this.isDesktop) {
+          // Desktop: render 2 pages
+          await this.renderTwoPages();
+        } else {
+          // Mobile/Tablet: render 1 page
+          await this.renderSinglePage();
+        }
+        
+        if (!this.isDestroyed) {
+          this.updateNavigation();
+        }
+      } catch (error) {
+        if (!this.isDestroyed) {
+          console.error('Error rendering pages:', error);
+          this.showError('Failed to render PDF pages');
+        }
+      }
+    }
+
+    async renderSinglePage() {
+      if (this.isDestroyed) return;
+      
+      // Cancel any existing render tasks
+      this.cancelRenderTasks();
+      
+      const page = await this.pdfDoc.getPage(this.currentPage);
+      const viewport = page.getViewport({ scale: this.scale });
+      
+      this.canvas1.width = viewport.width;
+      this.canvas1.height = viewport.height;
+      this.canvas1.style.display = 'block';
+      this.canvas2.style.display = 'none';
+      
+      const renderContext = {
+        canvasContext: this.ctx1,
+        viewport: viewport
+      };
+      
+      const renderTask = page.render(renderContext);
+      this.renderTasks.push(renderTask);
+      
+      await renderTask.promise;
+    }
+
+    async renderTwoPages() {
+      if (this.isDestroyed) return;
+      
+      // Cancel any existing render tasks
+      this.cancelRenderTasks();
+      
+      const page1 = await this.pdfDoc.getPage(this.currentPage);
+      const page2 = this.currentPage + 1 <= this.totalPages ? 
+        await this.pdfDoc.getPage(this.currentPage + 1) : null;
+      
+      const viewport1 = page1.getViewport({ scale: this.scale });
+      const viewport2 = page2 ? page2.getViewport({ scale: this.scale }) : null;
+      
+      // Render first page
+      this.canvas1.width = viewport1.width;
+      this.canvas1.height = viewport1.height;
+      this.canvas1.style.display = 'block';
+      
+      const renderContext1 = {
+        canvasContext: this.ctx1,
+        viewport: viewport1
+      };
+      
+      const renderTask1 = page1.render(renderContext1);
+      this.renderTasks.push(renderTask1);
+      await renderTask1.promise;
+      
+      // Render second page if exists
+      if (page2 && viewport2) {
+        this.canvas2.width = viewport2.width;
+        this.canvas2.height = viewport2.height;
+        this.canvas2.style.display = 'block';
+        
+        const renderContext2 = {
+          canvasContext: this.ctx2,
+          viewport: viewport2
+        };
+        
+        const renderTask2 = page2.render(renderContext2);
+        this.renderTasks.push(renderTask2);
+        await renderTask2.promise;
+      } else {
+        this.canvas2.style.display = 'none';
+      }
+    }
+
+    nextPage() {
+      if (this.isDesktop) {
+        this.currentPage += 2;
+      } else {
+        this.currentPage += 1;
+      }
+      
+      if (this.currentPage > this.totalPages) {
+        this.currentPage = this.totalPages;
+      }
+      
+      this.renderPages();
+    }
+
+    prevPage() {
+      if (this.isDesktop) {
+        this.currentPage -= 2;
+      } else {
+        this.currentPage -= 1;
+      }
+      
+      if (this.currentPage < 1) {
+        this.currentPage = 1;
+      }
+      
+      this.renderPages();
+    }
+
+    updateNavigation() {
+      this.prevBtn.disabled = this.currentPage <= 1;
+      this.nextBtn.disabled = this.isDesktop ? 
+        this.currentPage + 1 >= this.totalPages : 
+        this.currentPage >= this.totalPages;
+    }
+
+    hideLoading() {
+      if (this.loadingEl) {
+        this.loadingEl.style.display = 'none';
+      }
+    }
+
+    showError(message) {
+      if (this.loadingEl) {
+        this.loadingEl.innerHTML = `<p style="color: #ff6b6b;">${message}</p>`;
+      }
+    }
+
+    cancelRenderTasks() {
+      this.renderTasks.forEach(task => {
+        if (task && typeof task.cancel === 'function') {
+          task.cancel();
+        }
+      });
+      this.renderTasks = [];
+    }
+
+    destroy() {
+      this.isDestroyed = true;
+      this.cancelRenderTasks();
+      
+      // Remove event listeners
+      if (this.prevBtn) {
+        this.prevBtn.removeEventListener('click', this.prevPage);
+      }
+      if (this.nextBtn) {
+        this.nextBtn.removeEventListener('click', this.nextPage);
+      }
+      
+      // Clean up PDF document
+      if (this.pdfDoc) {
+        this.pdfDoc.destroy();
+        this.pdfDoc = null;
+      }
+    }
+
+    setupEventListeners() {
+      this.prevBtn.addEventListener('click', () => this.prevPage());
+      this.nextBtn.addEventListener('click', () => this.nextPage());
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        const wasDesktop = this.isDesktop;
+        this.isDesktop = window.innerWidth >= 992;
+        
+        if (wasDesktop !== this.isDesktop) {
+          this.renderPages();
+        }
+      });
+    }
+  }
+
+  // Global instance management
+  let pdfViewerInstance = null;
+
+  // Initialize PDF viewer when DOM is ready
+  function initPDFViewer() {
+    // Clean up existing instance
+    if (pdfViewerInstance) {
+      pdfViewerInstance.destroy();
+      pdfViewerInstance = null;
+    }
+
+    // Check if PDF viewer elements exist
+    const canvas1 = document.getElementById('pdf-canvas-1');
+    if (!canvas1) return;
+
+    // Create new instance
+    pdfViewerInstance = new PDFViewer();
+  }
+
+  // Initialize on page load and after view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPDFViewer);
+  } else {
+    initPDFViewer();
+  }
+  
+  document.addEventListener('astro:page-load', initPDFViewer);
+  
+  // Clean up on page unload
+  document.addEventListener('astro:before-preparation', () => {
+    if (pdfViewerInstance) {
+      pdfViewerInstance.destroy();
+      pdfViewerInstance = null;
+    }
+  });
+</script>

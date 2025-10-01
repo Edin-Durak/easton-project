@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactComponent from '../components/Contact.astro';
 ---
 
 <Layout 
@@ -8,5 +9,10 @@ import Layout from '../layouts/Layout.astro';
     keywords="Contact, Easton Project, Donate, Volunteer, Montreal, Charity, Get in touch"
     ogImage="/contact-og-image.png"
 >
-    <h1>Contact Easton Project</h1>
+    <main class="contact-main">
+        <ContactComponent 
+            heading="Contact Us"
+            subheading="For general inquiries, please use the contact form below."
+        />
+    </main>
 </Layout>

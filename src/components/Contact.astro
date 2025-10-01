@@ -1,0 +1,244 @@
+---
+export interface Props {
+  heading?: string;
+  subheading?: string;
+}
+
+const { heading, subheading } = Astro.props;
+---
+
+<section class="contact" aria-labelledby={heading ? "contact-heading" : undefined}>
+  <div class="contact__inner container">
+    {heading && (
+      <h2 class="contact__heading" id="contact-heading">
+        {heading}
+      </h2>
+    )}
+    
+    {subheading && (
+      <p class="contact__subheading">
+        {subheading}
+      </p>
+    )}
+
+    <form class="contact__form" id="contact-form" method="POST">
+      <!-- Web3Forms access key - Replace with your actual key -->
+      <input type="hidden" name="access_key" value="c29d85e8-2b1e-4adf-9c7f-219198130789">
+      
+      <!-- Hidden honeypot fields for bot protection -->
+      <input type="text" name="website" style="display: none;" tabindex="-1" autocomplete="off" />
+      <input type="email" name="email_confirm" style="display: none;" tabindex="-1" autocomplete="off" />
+      
+      
+      <div class="contact__form-group contact__form-group--subject">
+        <label for="subject" class="contact__label">
+          Subject
+        </label>
+         <input 
+           type="text" 
+           id="subject" 
+           name="subject" 
+           class="contact__input" 
+           placeholder="Enter your subject"
+           required
+           minlength="3"
+         />
+      </div>
+      
+      <div class="contact__form-row">
+        <div class="contact__form-group">
+          <label for="firstName" class="contact__label">
+            First Name
+          </label>
+           <input 
+             type="text" 
+             id="firstName" 
+             name="firstName" 
+             class="contact__input" 
+             placeholder="SAMPLE"
+             required
+             minlength="2"
+             autocomplete="given-name"
+           />
+        </div>
+        
+        <div class="contact__form-group">
+          <label for="lastName" class="contact__label">
+            Last Name
+          </label>
+           <input 
+             type="text" 
+             id="lastName" 
+             name="lastName" 
+             class="contact__input" 
+             placeholder="SAMPLE"
+             required
+             minlength="2"
+             autocomplete="family-name"
+           />
+        </div>
+      </div>
+
+      <div class="contact__form-group">
+        <label for="email" class="contact__label">
+          Email Address
+        </label>
+         <input 
+           type="email" 
+           id="email" 
+           name="email" 
+           class="contact__input" 
+           placeholder="SAMPLE@SAMPLE.COM"
+           required
+           autocomplete="email"
+           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+           title="Please enter a valid email address (e.g., user@example.com)"
+         />
+      </div>
+
+      <div class="contact__form-group">
+        <label for="message" class="contact__label" hidden>
+          Message
+        </label>
+         <textarea 
+           id="message" 
+           name="message" 
+           class="contact__textarea" 
+           placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in nisl eu nisi iaculis tincidunt non placerat ligula. Vivamus semper vestibulum sem a congue. In tellus metus, mattis at volutpat ac, elementum nec libero. Donec ornare ac sapien ac hendrerit. Mauris quis posuere nisi. Morbi ac metus tempor purus ornare laoreet nec non dui. Fusce cursus tortor in quam tempor, ac aliquam magna laoreet. Aliquam consectetur, dolor sed commodo laoreet, purus leo semper libero, in sollicitudin nunc nisl nec felis. Vestibulum volutpat nunc eget ex fermentum egestas. Nullam urna nisl, auctor in arcu non, sollicitudin molestie risus. Donec quam est, tristique vitae est in, mattis volutpat purus."
+           rows="10"
+           required
+         ></textarea>
+      </div>
+
+      <div class="contact__form-actions">
+        <button type="submit" class="contact__button" id="submit-btn">
+          Send
+        </button>
+      </div>
+      
+      <!-- Form result message -->
+      <div id="form-result" class="contact__result" style="display: none;"></div>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  const form = document.getElementById('contact-form');
+  const result = document.getElementById('form-result');
+  const submitBtn = document.getElementById('submit-btn');
+
+  if (form && result && submitBtn) {
+    // Email validation patterns
+    const emailPatterns = [
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,  // Standard email
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, // With 2-4 char TLD
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\.[a-zA-Z]{2,}$/ // Multi-level TLD
+    ];
+    
+    function validateEmail(email) {
+      return emailPatterns.some(pattern => pattern.test(email));
+    }
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate email before submission
+      const emailField = form.querySelector('input[name="email"]');
+      if (emailField && !validateEmail(emailField.value.trim())) {
+        result.style.display = 'block';
+        result.innerHTML = 'Please enter a valid email address (e.g., user@example.com)';
+        result.className = 'contact__result contact__result--error';
+        emailField.focus();
+        return;
+      }
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      result.style.display = 'block';
+      result.innerHTML = 'Please wait...';
+      result.className = 'contact__result contact__result--loading';
+
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      
+      // Remove honeypot fields - they should not be sent to Web3Forms
+      delete object.website;
+      delete object.email_confirm;
+      
+      // Combine firstName and lastName into name field (Web3Forms expects 'name')
+      if (object.firstName && object.lastName) {
+        object.name = `${object.firstName} ${object.lastName}`;
+        delete object.firstName;
+        delete object.lastName;
+      }
+      
+      // Handle subject field - try different approaches
+      const subjectField = form.querySelector('input[name="subject"]');
+      if (subjectField && subjectField.value.trim()) {
+        // Try using 'from_name' which Web3Forms might recognize
+        object.from_name = subjectField.value.trim();
+        // Also keep subject field
+        object.subject = subjectField.value.trim();
+        // And prepend to message for visibility
+        object.message = `Subject: ${subjectField.value.trim()}\n\n${object.message}`;
+      }
+      
+      // Reorder fields for better email display: Email, Name, Message
+      const orderedObject = {
+        access_key: object.access_key,
+        email: object.email,
+        name: object.name,
+        message: object.message
+      };
+      
+      // Add subject fields if they exist
+      if (object.subject) {
+        orderedObject.subject = object.subject;
+      }
+      if (object.from_name) {
+        orderedObject.from_name = object.from_name;
+      }
+      
+      const json = JSON.stringify(orderedObject);
+      
+      // Debug: Log the form data being sent
+      console.log('Form data being sent:', orderedObject);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+          result.innerHTML = json.message;
+          result.className = 'contact__result contact__result--success';
+          form.reset();
+        } else {
+          result.innerHTML = json.message || 'Something went wrong. Please try again.';
+          result.className = 'contact__result contact__result--error';
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        result.innerHTML = 'Something went wrong. Please try again.';
+        result.className = 'contact__result contact__result--error';
+      })
+      .finally(() => {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send';
+        
+        // Hide result message after 5 seconds
+        setTimeout(() => {
+          result.style.display = 'none';
+        }, 5000);
+      });
+    });
+  }
+</script>

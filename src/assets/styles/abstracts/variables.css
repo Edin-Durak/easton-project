@@ -6,6 +6,7 @@
   --color-light-blue: #a5b4ba;
   --color-black: #000000;
   --color-white: #ffffff;
+  --color-dark-green: #396474;
 
   /* Typography */
   --font-family-base: "Inria Serif", "Georgia", serif;
@@ -62,6 +63,7 @@
   --rounded-md: 24px;
   --rounded-lg: 32px;
   --rounded-xl: 40px;
+  --rounded-2xl: 60px;
   --rounded-full: 999px;
 
   /* Shadows */
