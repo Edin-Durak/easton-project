@@ -734,8 +734,6 @@
 }
 
 .pdf-viewer__canvas {
-  background-color: var(--color-white);
-  border-radius: var(--rounded-lg);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   max-width: 100%;
   height: auto;
