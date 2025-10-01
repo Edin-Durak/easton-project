@@ -678,7 +678,7 @@
   align-items: center;
   gap: var(--spacing-8);
   margin-bottom: var(--spacing-12);
-  width: 100%;
+  width: calc(100% + 50px);
   position: absolute;
   left: 50%;
   top: 50%;
@@ -813,6 +813,7 @@
     top: auto;
     transform: none;
     justify-content: space-evenly;
+    width: 100%;
   }
 
   .pdf-viewer__btn {
