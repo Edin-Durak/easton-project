@@ -455,9 +455,12 @@
     }
 
     .hero-section__cta-image {
+      /*
       flex: 0 0 100%;
       max-width: 80%;
       margin: 0 auto;
+      */
+      display: none;
     }
 
     .our-mission__ceo {
