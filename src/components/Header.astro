@@ -22,7 +22,7 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
                 <a href="/easton-project/contact" class="header__nav-link" data-page="contact">Contact</a>
             </nav>
             <div class="header__nav-buttons">
-                <a href="/easton-project/donate" role="button" class="header__nav-button">Donate</a>
+                <button type="button" class="header__nav-button" id="desktop-donate-btn">Donate</button>
             </div>
         </div>
 
@@ -39,7 +39,7 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
             <a href="/easton-project/" class="header__mobile-nav-link" data-page="home">Home</a>
             <a href="/easton-project/about" class="header__mobile-nav-link" data-page="about">About</a>
             <a href="/easton-project/contact" class="header__mobile-nav-link" data-page="contact">Contact</a>
-            <a href="/easton-project/donate" class="header__mobile-nav-button">Donate</a>
+            <button type="button" class="header__mobile-nav-button" id="mobile-donate-btn">Donate</button>
         </nav>
     </div>
 </header>
@@ -71,7 +71,7 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
                 });
 
                 // Close menu when clicking on links
-                const mobileLinks = freshMobileNav.querySelectorAll('.header__mobile-nav-link, .header__mobile-nav-button');
+                const mobileLinks = freshMobileNav.querySelectorAll('.header__mobile-nav-link');
                 mobileLinks.forEach(link => {
                     link.addEventListener('click', () => {
                         freshMenuToggle.setAttribute('aria-expanded', 'false');
@@ -79,6 +79,16 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
                         body.classList.remove('no-scroll');
                     });
                 });
+
+                // Close menu when clicking on donate button (but don't prevent modal from opening)
+                const mobileDonateButton = freshMobileNav.querySelector('#mobile-donate-btn');
+                if (mobileDonateButton) {
+                    mobileDonateButton.addEventListener('click', () => {
+                        freshMenuToggle.setAttribute('aria-expanded', 'false');
+                        freshMobileNav.classList.remove('header__mobile-nav--open');
+                        body.classList.remove('no-scroll');
+                    });
+                }
 
                 // Close menu when clicking outside
                 const outsideClickHandler = (e: Event) => {
@@ -149,4 +159,186 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
 
     // Handle window resize
     window.addEventListener('resize', handleResize);
+
+    // Simple Donate Modal
+    function showDonateModal() {
+        // Create modal overlay
+        const modalOverlay = document.createElement('div');
+        modalOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `;
+
+        // Create modal content
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+            background: var(--color-dark-navy);
+            padding: var(--spacing-8);
+            border-radius: var(--rounded-lg);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 2px solid var(--color-warm-beige);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        `;
+
+        // Add close button
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '×';
+        closeBtn.style.cssText = `
+            position: absolute;
+            top: var(--spacing-4);
+            right: var(--spacing-5);
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--color-warm-beige);
+            transition: color 0.3s ease;
+            padding: var(--spacing-2);
+            border-radius: var(--rounded-2xs);
+        `;
+
+        // Add hover effect for close button
+        closeBtn.addEventListener('mouseenter', () => {
+            closeBtn.style.opacity = '0.9';
+            
+        });
+        closeBtn.addEventListener('mouseleave', () => {
+            closeBtn.style.opacity = '1';
+        });
+
+        // Add title
+        const title = document.createElement('h2');
+        title.textContent = 'Support The Easton Project';
+        title.style.cssText = `
+            margin: 0 0 var(--spacing-6) 0;
+            color: var(--color-warm-beige);
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-family: var(--font-family-base);
+            line-height: 1.2;
+        `;
+
+        // Add description
+        const description = document.createElement('p');
+        description.textContent = 'Your donation helps us provide critical support for individuals facing addiction and mental health challenges in Quebec.';
+        description.style.cssText = `
+            margin: 0 0 var(--spacing-8) 0;
+            color: var(--color-warm-beige);
+            line-height: 1.6;
+            font-size: 1.125rem;
+            font-family: var(--font-family-secondary);
+        `;
+
+        // Create PayPal button container
+        const paypalContainer = document.createElement('div');
+        paypalContainer.id = 'paypal-donate-modal-container';
+        paypalContainer.style.cssText = `
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-6);
+            background-color: var(--color-light-blue);
+            border-radius: var(--rounded);
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        `;
+
+        // Add hover effect for PayPal container
+        paypalContainer.addEventListener('mouseenter', () => {
+            paypalContainer.style.borderColor = 'var(--color-warm-beige)';
+        });
+        paypalContainer.addEventListener('mouseleave', () => {
+            paypalContainer.style.borderColor = 'transparent';
+        });
+
+        // Assemble modal
+        modalContent.appendChild(closeBtn);
+        modalContent.appendChild(title);
+        modalContent.appendChild(description);
+        modalContent.appendChild(paypalContainer);
+        modalOverlay.appendChild(modalContent);
+        document.body.appendChild(modalOverlay);
+
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+
+        // Close modal function
+        const closeModal = () => {
+            document.body.removeChild(modalOverlay);
+            document.body.style.overflow = '';
+        };
+
+        // Close modal handlers
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Close on Escape key
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+
+        // Render PayPal button
+        if (typeof (window as any).PayPal !== 'undefined') {
+            (window as any).PayPal.Donation.Button({
+                env: 'production',
+                hosted_button_id: 'ETVKFLEWWXSQC',
+                image: {
+                    src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+                    title: 'PayPal - The safer, easier way to pay online!',
+                    alt: 'Donate with PayPal button'
+                },
+                onComplete: function (params: any) {
+                    console.log('Donation completed:', params);
+                    closeModal();
+                },
+                onError: function (error: any) {
+                    console.error('PayPal donation error:', error);
+                    closeModal();
+                }
+            }).render('#paypal-donate-modal-container');
+        }
+    }
+
+    // Setup donate button event listeners
+    function setupDonateButtons() {
+        const desktopBtn = document.getElementById('desktop-donate-btn');
+        const mobileBtn = document.getElementById('mobile-donate-btn');
+
+        if (desktopBtn) {
+            desktopBtn.addEventListener('click', showDonateModal);
+        }
+
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', showDonateModal);
+        }
+    }
+
+    // Initialize on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupDonateButtons);
+    } else {
+        setupDonateButtons();
+    }
+
+    // Re-initialize after view transitions
+    document.addEventListener('astro:page-load', setupDonateButtons);
 </script>
