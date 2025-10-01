@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear();
 <footer class="footer">
     <div class="footer__inner container">
         <div class="footer__logo">
-            <a href="/easton-project/">
+            <a href="/">
                 <Image src={logo} alt="Easton Project Logo" width={100} height={100} loading="lazy" />
             </a>
         </div>
@@ -28,9 +28,9 @@ const currentYear = new Date().getFullYear();
         
         <div class="footer__nav">
             <nav class="footer__nav-list">
-                <a href="/easton-project/" class="footer__nav-link" data-page="home">Home</a>
-                <a href="/easton-project/about" class="footer__nav-link" data-page="about">About</a>
-                <a href="/easton-project/contact" class="footer__nav-link" data-page="contact">Contact</a>
+                <a href="/" class="footer__nav-link" data-page="home">Home</a>
+                <a href="/about" class="footer__nav-link" data-page="about">About</a>
+                <a href="/contact" class="footer__nav-link" data-page="contact">Contact</a>
                 <button type="button" class="footer__nav-button" id="footer-donate-btn">Donate</button>
             </nav>
         </div>
@@ -61,11 +61,11 @@ const currentYear = new Date().getFullYear();
             // Add active class to current page link
             // Handle both local development and GitHub Pages deployment
             if (linkPath === currentPath || 
-                (currentPath === '/easton-project/' && linkPage === 'home') ||
                 (currentPath === '/' && linkPage === 'home') ||
-                (currentPath === '/easton-project/about' && linkPage === 'about') ||
+                (currentPath === '/' && linkPage === 'home') ||
                 (currentPath === '/about' && linkPage === 'about') ||
-                (currentPath === '/easton-project/contact' && linkPage === 'contact') ||
+                (currentPath === '/about' && linkPage === 'about') ||
+                (currentPath === '/contact' && linkPage === 'contact') ||
                 (currentPath === '/contact' && linkPage === 'contact')) {
                 link.classList.add('active');
             }

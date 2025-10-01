@@ -9,7 +9,7 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
 <header class="header">
     <div class="header__inner container">
         <div class="header__logo">
-            <a href="/easton-project/">
+            <a href="/">
                 <Image src={logo} alt="Easton Project Logo" width={100} height={100} loading="eager" />
             </a>
         </div>
@@ -17,9 +17,9 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
         <!-- Desktop Navigation -->
         <div class="header__nav">
             <nav class="header__nav-list">
-                <a href="/easton-project/" class="header__nav-link" data-page="home">Home</a>
-                <a href="/easton-project/about" class="header__nav-link" data-page="about">About</a>
-                <a href="/easton-project/contact" class="header__nav-link" data-page="contact">Contact</a>
+                <a href="/" class="header__nav-link" data-page="home">Home</a>
+                <a href="/about" class="header__nav-link" data-page="about">About</a>
+                <a href="/contact" class="header__nav-link" data-page="contact">Contact</a>
             </nav>
             <div class="header__nav-buttons">
                 <button type="button" class="header__nav-button" id="desktop-donate-btn">Donate</button>
@@ -36,9 +36,9 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
     <!-- Mobile Navigation Overlay -->
     <div class="header__mobile-nav">
         <nav class="header__mobile-nav-list">
-            <a href="/easton-project/" class="header__mobile-nav-link" data-page="home">Home</a>
-            <a href="/easton-project/about" class="header__mobile-nav-link" data-page="about">About</a>
-            <a href="/easton-project/contact" class="header__mobile-nav-link" data-page="contact">Contact</a>
+            <a href="/" class="header__mobile-nav-link" data-page="home">Home</a>
+            <a href="/about" class="header__mobile-nav-link" data-page="about">About</a>
+            <a href="/contact" class="header__mobile-nav-link" data-page="contact">Contact</a>
             <button type="button" class="header__mobile-nav-button" id="mobile-donate-btn">Donate</button>
         </nav>
     </div>
@@ -122,11 +122,11 @@ import closeIcon from '../assets/images/icons/close-icon.svg';
             // Add active class to current page link
             // Handle both local development and GitHub Pages deployment
             if (linkPath === currentPath || 
-                (currentPath === '/easton-project/' && linkPage === 'home') ||
                 (currentPath === '/' && linkPage === 'home') ||
-                (currentPath === '/easton-project/about' && linkPage === 'about') ||
+                (currentPath === '/' && linkPage === 'home') ||
                 (currentPath === '/about' && linkPage === 'about') ||
-                (currentPath === '/easton-project/contact' && linkPage === 'contact') ||
+                (currentPath === '/about' && linkPage === 'about') ||
+                (currentPath === '/contact' && linkPage === 'contact') ||
                 (currentPath === '/contact' && linkPage === 'contact')) {
                 link.classList.add('active');
             }

@@ -8,7 +8,7 @@ export interface Props {
   pdfPath?: string;
 }
 
-const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/example-pdf.pdf" } = Astro.props;
+const { heading = "2025-26 Funding Drive", pdfPath = "/pdf/the-easton -project-booklet.pdf" } = Astro.props;
 ---
 
 <section class="pdf-viewer" aria-labelledby="pdf-heading">
@@ -38,8 +38,8 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
 
 <script define:vars={{ pdfPath }}>
   // PDF.js configuration - using local files for better performance
-  const PDFJS_URL = '/easton-project/libs/pdf.min.js';
-  const PDF_WORKER_URL = '/easton-project/libs/pdf.worker.min.js';
+  const PDFJS_URL = '/libs/pdf.min.js';
+  const PDF_WORKER_URL = '/libs/pdf.worker.min.js';
   
   class PDFViewer {
     constructor() {
