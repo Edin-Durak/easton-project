@@ -34,7 +34,6 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 		
 		<!-- Preload critical fonts -->
 		<link rel="preload" href="/easton-project/fonts/Figtree/Figtree-Regular.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/easton-project/fonts/Figtree/Figtree-Bold.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="/easton-project/fonts/Inria-Serif/InriaSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
 		
 		<!-- Preload critical images -->
@@ -59,6 +58,20 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={ogImage} />
 		
+		<!-- Critical CSS for hero section -->
+		<style>
+			.hero-section__content-image img {
+				width: 100%;
+				height: auto;
+				display: block;
+			}
+			.hero-section__content {
+				display: flex;
+				align-items: center;
+				gap: 2rem;
+			}
+		</style>
+		
 		<!-- View Transitions -->
 		<ViewTransitions />
 	</head>
@@ -69,8 +82,17 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 
 		<Footer />
 
-		<!-- PayPal Donation SDK - Load asynchronously for better performance -->
-		<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8" async></script>
+		<!-- PayPal Donation SDK - Load after page render for better performance -->
+		<script>
+			// Load PayPal SDK after page is fully loaded
+			window.addEventListener('load', function() {
+				const script = document.createElement('script');
+				script.src = 'https://www.paypalobjects.com/donate/sdk/donate-sdk.js';
+				script.charset = 'UTF-8';
+				script.async = true;
+				document.head.appendChild(script);
+			});
+		</script>
 	</body>
 </html>
 
