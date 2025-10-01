@@ -63,6 +63,9 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
     }
 
     initLazyLoading() {
+      // Preload PDF.js script early (but don't execute)
+      this.preloadPDFJS();
+      
       // Use Intersection Observer to load PDF when it comes into view
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -73,7 +76,7 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
           }
         });
       }, { 
-        rootMargin: '200px' // Start loading 200px before it comes into view
+        rootMargin: '500px' // Start loading 500px before it comes into view
       });
       
       // Observe the PDF viewer container
@@ -83,27 +86,70 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
       }
     }
 
+    preloadPDFJS() {
+      // Preload PDF.js script for faster loading later
+      if (!document.querySelector('link[href*="pdf.min.js"]')) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.href = '/easton-project/libs/pdf.min.js';
+        link.as = 'script';
+        document.head.appendChild(link);
+      }
+      
+      // Also preload the worker
+      if (!document.querySelector('link[href*="pdf.worker.min.js"]')) {
+        const workerLink = document.createElement('link');
+        workerLink.rel = 'preload';
+        workerLink.href = '/easton-project/libs/pdf.worker.min.js';
+        workerLink.as = 'script';
+        document.head.appendChild(workerLink);
+      }
+      
+      // Preload the PDF file for faster loading
+      if (!document.querySelector(`link[href*="${pdfPath}"]`)) {
+        const pdfLink = document.createElement('link');
+        pdfLink.rel = 'preload';
+        pdfLink.href = pdfPath;
+        pdfLink.as = 'fetch';
+        pdfLink.crossOrigin = 'anonymous';
+        document.head.appendChild(pdfLink);
+      }
+    }
+
     async loadPDFViewer() {
       if (this.isLoaded) return;
       
       try {
-        // Load PDF.js dynamically
+        // Show loading progress
+        this.showLoadingProgress('Loading PDF viewer...');
+        
+        // Load PDF.js dynamically (should be fast since it's preloaded)
         await this.loadPDFJS();
+        
+        this.showLoadingProgress('Loading PDF document...');
         
         // Load the PDF
         await this.loadPDF(pdfPath);
+        
+        this.showLoadingProgress('Rendering pages...');
         
         // Set up event listeners
         this.setupEventListeners();
         
         // Initial render
-        this.renderPages();
+        await this.renderPages();
         
         this.isLoaded = true;
         
       } catch (error) {
         console.error('PDF Viewer initialization failed:', error);
         this.showError('Failed to load PDF viewer');
+      }
+    }
+
+    showLoadingProgress(message) {
+      if (this.loadingEl) {
+        this.loadingEl.innerHTML = `<p>${message}</p>`;
       }
     }
 
@@ -119,8 +165,24 @@ const { heading = "2025-26 Funding Drive", pdfPath = "/easton-project/pdf/exampl
           return;
         }
 
+        // Check if script is already being loaded
+        if (document.querySelector(`script[src="${PDFJS_URL}"]`)) {
+          // Wait for existing script to load
+          const checkLoaded = () => {
+            if (window.pdfjsLib) {
+              window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDF_WORKER_URL;
+              resolve();
+            } else {
+              setTimeout(checkLoaded, 50);
+            }
+          };
+          checkLoaded();
+          return;
+        }
+
         const script = document.createElement('script');
         script.src = PDFJS_URL;
+        script.async = true;
         script.onload = () => {
           window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDF_WORKER_URL;
           resolve();
