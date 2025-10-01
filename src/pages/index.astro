@@ -22,7 +22,9 @@ import PDFViewer from '../components/PDFViewer.astro';
   ogImage="/og-image.png"
   preloadImages={[
     { src: groupPhotoMobile.src, media: "(max-width: 767px)" },
-    { src: groupPhotoDesktop.src, media: "(min-width: 768px)" }
+    { src: groupPhotoDesktop.src, media: "(min-width: 768px)" },
+    { src: eastonProjectPhotoMobile.src, media: "(max-width: 767px)" },
+    { src: eastonProjectPhotoDesktop.src, media: "(min-width: 768px)" }
   ]}
 >
     <main class="home-main">
@@ -33,12 +35,13 @@ import PDFViewer from '../components/PDFViewer.astro';
                     <div class="hero-section__content-image">
                         <picture>
                             <source media="(min-width: 768px)" srcset={groupPhotoDesktop.src} />
-                            <Image 
-                              src={groupPhotoMobile} 
+                            <img 
+                              src={groupPhotoMobile.src} 
                               alt="Easton Project"
                               loading="eager"
-                              format="avif"
                               fetchpriority="high"
+                              width="708"
+                              height="455"
                             />
                           </picture>
                         
@@ -60,11 +63,12 @@ import PDFViewer from '../components/PDFViewer.astro';
                     <div class="hero-section__cta-image">
                         <picture>
                             <source media="(min-width: 768px)" srcset={eastonProjectPhotoDesktop.src} />
-                            <Image 
-                              src={eastonProjectPhotoMobile} 
+                            <img 
+                              src={eastonProjectPhotoMobile.src} 
                               alt="Easton Project"
                               loading="eager"
-                              format="avif"
+                              width="628"
+                              height="886"
                             />
                         </picture>
                     </div>

@@ -70,6 +70,10 @@ const { title = "Easton Project", description = "Easton Project - Making a diffe
 				align-items: center;
 				gap: 2rem;
 			}
+			/* Optimize image loading */
+			img[loading="eager"] {
+				content-visibility: auto;
+			}
 		</style>
 		
 		<!-- View Transitions -->
